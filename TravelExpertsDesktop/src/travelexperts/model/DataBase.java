@@ -113,7 +113,8 @@ public class DataBase
 
 		for(Map.Entry<String, Object> row : myHash.entrySet())
 		{
-			Field field = entity.getField(row.getKey());
+			Field field = entity.getDeclaredField(row.getKey());
+			field.setAccessible(true);
 			field.set(objectInstance, row.getValue());
 
 		}

@@ -63,16 +63,32 @@ public class TravelPackage
 	{
 		this.PackageId = packageId;
 	}
-	public BigDecimal PkgAgencyCommission;
-	public BigDecimal PkgBasePrice;
-	public String PkgDesc;
-	public Date PkgEndDate;
-	public Date PkgStartDate;
-	public String PkgName;
-	public int PackageId;
+	
+	private BigDecimal PkgAgencyCommission;
+	private BigDecimal PkgBasePrice;
+	private String PkgDesc;
+	private Date PkgEndDate;
+	private Date PkgStartDate;
+	private String PkgName;
+	private int PackageId;
+	private final static String TABLE = "Packages";
+	private final static String PRIMARYKEY = "PackageId";
+	
 	
 	public TravelPackage(){}
 	
+	public TravelPackage(BigDecimal pkgAgencyCommission, BigDecimal pkgBasePrice, String pkgDesc, Date pkgEndDate,
+	        Date pkgStartDate, String pkgName, int packageId)
+	{
+		super();
+		PkgAgencyCommission = pkgAgencyCommission;
+		PkgBasePrice = pkgBasePrice;
+		PkgDesc = pkgDesc;
+		PkgEndDate = pkgEndDate;
+		PkgStartDate = pkgStartDate;
+		PkgName = pkgName;
+		PackageId = packageId;
+	}
 	public static ArrayList<TravelPackage> getPackages() throws SQLException
 	{
 		
@@ -102,7 +118,7 @@ public class TravelPackage
 		TravelPackage myPackage = null;
 		try
 		{
-			myPackage = (TravelPackage)DataBase.getById("Packages","PackageId",Id,TravelPackage.class);;
+			myPackage = (TravelPackage)DataBase.getById(TABLE,PRIMARYKEY,Id,TravelPackage.class);;
 		}
 		catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e)
 		{

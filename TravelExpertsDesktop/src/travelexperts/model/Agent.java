@@ -14,16 +14,17 @@ import sun.management.resources.agent;
 public class Agent
 {
 	
-	public String AgtBusPhone;
-	public String AgtEmail;
-	public int AgencyId;
-	public String AgtLastName;
-	public String AgtMiddleInitial;
-	public String AgtPosition;
-	public int AgentId;
-	public String AgtFirstName;
+	private String AgtBusPhone;
+	private String AgtEmail;
+	private int AgencyId;
+	private String AgtLastName;
+	private String AgtMiddleInitial;
+	private String AgtPosition;
+	private int AgentId;
+	private String AgtFirstName;
 	
-	
+	private final static String TABLE = "Agents";
+	private final static String PRIMARYKEY = "AgentId";
 	
 	public Agent(){}
 	
@@ -124,7 +125,7 @@ public class Agent
 			ArrayList<Agent> myList = new ArrayList<Agent>();
 			try
 			{
-				for (Object object : DataBase.getTable("Agents",Agent.class))
+				for (Object object : DataBase.getTable(TABLE,Agent.class))
 				{
 					myList.add((Agent)object);
 				}
@@ -146,7 +147,7 @@ public class Agent
 		Agent myAgent = null;
 		try
 		{
-			myAgent = (Agent)DataBase.getById("Agents","AgentId",Id,Agent.class);
+			myAgent = (Agent)DataBase.getById(TABLE,PRIMARYKEY,Id,Agent.class);
 		}
 		catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e)
 		{

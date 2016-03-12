@@ -3,6 +3,7 @@ package travelexperts.controller;
 import java.sql.SQLException;
 
 import travelexperts.model.Agent;
+import travelexperts.model.Customer;
 import travelexperts.model.TravelPackage;
 
 public class MainApp
@@ -13,6 +14,7 @@ public class MainApp
 		// TODO Auto-generated method stub
 		Agent myAgent = null;
 		TravelPackage myPackage = null;
+		Customer myCust = null;
 		
 		try
 		{
@@ -45,6 +47,22 @@ public class MainApp
 			e.printStackTrace();
 		}
 		System.out.println(myPackage.toString());
+		
+		try
+		{
+			for(Customer cust : Customer.getCustomers())
+			{
+				System.out.println(cust.toString());
+				
+			}
+			myCust = Customer.getCustomerById(104);
+		}
+		catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			System.out.println("Fucked up!");
+		}
+		System.out.println(myCust.toString());
 	}
 	
 
