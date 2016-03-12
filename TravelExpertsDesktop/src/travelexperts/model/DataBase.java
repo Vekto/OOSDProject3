@@ -62,7 +62,6 @@ public class DataBase
 	            row.put(metaData.getColumnName(i), rs.getObject(i));
 	        }
 	        objectInstance = entityConstructor(row, entity);
-	        System.out.print(objectInstance.toString());
 	        resultList.add(objectInstance);
 	    }
 	    rs.close();
