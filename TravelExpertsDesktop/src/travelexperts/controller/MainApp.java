@@ -1,6 +1,7 @@
 package travelexperts.controller;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 
 import travelexperts.model.Agency;
 import travelexperts.model.Agent;
@@ -25,6 +26,12 @@ public class MainApp
 				System.out.println(agent.toString());
 				
 			}
+			for (HashMap.Entry<Integer, String> entry : Agent.getAgentComboList().entrySet()) {
+			    Integer key = entry.getKey();
+			    String value = entry.getValue();
+			    System.out.println("Key: " + key + " Value:" + value);
+			}
+			
 			myAgent = Agent.getAgentById(2);
 		}
 		catch (SQLException e)
@@ -40,6 +47,11 @@ public class MainApp
 			{
 				System.out.println(pack.toString());
 				
+			}
+			for (HashMap.Entry<Integer, String> entry : TravelPackage.getPackageComboList().entrySet()) {
+			    Integer key = entry.getKey();
+			    String value = entry.getValue();
+			    System.out.println("Key: " + key + " Value:" + value);
 			}
 			myPackage = TravelPackage.getPackageById(4);
 		}
@@ -57,27 +69,37 @@ public class MainApp
 				System.out.println(cust.toString());
 				
 			}
+			for (HashMap.Entry<Integer, String> entry : Customer.getCustomerComboList().entrySet()) {
+			    Integer key = entry.getKey();
+			    String value = entry.getValue();
+			    System.out.println("Key: " + key + " Value:" + value);
+			}
 			myCust = Customer.getCustomerById(105);
 		}
 		catch (SQLException e)
 		{
 			// TODO Auto-generated catch block
-			System.out.println("Fucked up!");
+			System.out.println("An Error has occured in retrieving your data");
 		}
 		System.out.println(myCust.toString());
 		try
 		{
-			for(Agency agency : Agency.getAgencys())
+			for(Agency agency : Agency.getAgencies())
 			{
 				System.out.println(agency.toString());
 				
+			}
+			for (HashMap.Entry<Integer, String> entry : Agency.getAgencyComboList().entrySet()) {
+			    Integer key = entry.getKey();
+			    String value = entry.getValue();
+			    System.out.println("Key: " + key + " Value:" + value);
 			}
 			myAgency = Agency.getAgencyById(1);
 		}
 		catch (SQLException e)
 		{
 			// TODO Auto-generated catch block
-			System.out.println("Fucked up!");
+			System.out.println("An error has occured in retrieving your data");
 		}
 		System.out.println(myAgency.toString());
 	}

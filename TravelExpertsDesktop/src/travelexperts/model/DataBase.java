@@ -96,6 +96,28 @@ public class DataBase
 	    return myEntity;
 	}
 	
+	public static HashMap<Integer,String> getComboList(String Table,String id, String myField) throws SQLException, IllegalAccessException, NoSuchFieldException, SecurityException
+	{
+		Connection conn = getConnection();
+		Statement statement = conn.createStatement();
+		ResultSet rs = statement.executeQuery("select " +id + "," + myField + " from " + Table);
+		
+	   
+	    HashMap<Integer, String> myHash = new HashMap<Integer,String>();
+	    while (rs.next()) 
+	    {
+	          myHash.put(rs.getInt(1), rs.getString(2));
+	    }
+        rs.close();
+        statement.close();
+        conn.close();
+        
+        
+	    return myHash;
+	}
+	
+	
+	
 	public static Object entityConstructor(HashMap<String,Object> myHash,Class<?> entity) throws IllegalAccessException, NoSuchFieldException, SecurityException 
 	{
 		

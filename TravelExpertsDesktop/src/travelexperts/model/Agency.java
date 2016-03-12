@@ -2,10 +2,135 @@ package travelexperts.model;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Agency
 {
 	
+	private int AgencyId; 
+	private String AgncyAddress; 
+	private String AgncyCity;
+	private String AgncyProv;
+	private String AgncyPostal;
+	private String AgncyCountry; 
+	private String AgncyPhone; 
+	private String AgncyFax;
+	
+	private static final String TABLE = "Agencies";
+	private static final String PRIMARYKEY = "AgencyId";
+
+	//Constructors
+//****************************************************************************************************
+	public Agency(){}
+	
+	
+	/**
+	 * @param agencyId
+	 * @param agncyAddress
+	 * @param agncyCity
+	 * @param agncyProv
+	 * @param agncyPostal
+	 * @param agncyCountry
+	 * @param agncyPhone
+	 * @param agncyFax
+	 */
+	public Agency(int agencyId, String agncyAddress, String agncyCity, String agncyProv, String agncyPostal,
+	        String agncyCountry, String agncyPhone, String agncyFax)
+	{
+		super();
+		AgencyId = agencyId;
+		AgncyAddress = agncyAddress;
+		AgncyCity = agncyCity;
+		AgncyProv = agncyProv;
+		AgncyPostal = agncyPostal;
+		AgncyCountry = agncyCountry;
+		AgncyPhone = agncyPhone;
+		AgncyFax = agncyFax;
+	}
+
+
+	//Methods
+//****************************************************************************************************	
+	/**
+	 * Retrieves an ArrayList of all Agencies
+	 * @return -ArrayList<Agency>
+	 * @throws SQLException
+	 */
+	public static ArrayList<Agency> getAgencies() throws SQLException
+	{
+			ArrayList<Agency> myList = new ArrayList<Agency>();
+			try
+			{
+				for (Object object : DataBase.getTable(TABLE,Agency.class))
+				{
+					myList.add((Agency)object);
+				}
+			}
+			catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+		return myList;	
+	}
+	
+	/**
+	 * Retrieves an Agency
+	 * @param Id -Id of the agency you wish to retrieve
+	 * @return Agency
+	 * @throws SQLException
+	 */
+	public static Agency getAgencyById(int Id) throws SQLException
+	{
+		Agency myAgency = null;
+		try
+		{
+			myAgency = (Agency)DataBase.getById(TABLE,PRIMARYKEY,Id,Agency.class);
+		}
+		catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return myAgency;
+	}
+	/**
+	 * Retrieves Agency id's and Address's for display in a DropDown or ComboBox
+	 * @return HashMap<Integer,String>
+	 * @throws SQLException
+	 */
+	public static HashMap<Integer,String> getAgencyComboList() throws SQLException
+	{
+		HashMap<Integer,String> myAgencyCombo= null;
+		try
+		{
+			myAgencyCombo = DataBase.getComboList(TABLE,PRIMARYKEY,"AgncyAddress");;
+		}
+		catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return myAgencyCombo;
+	}
+
+	//Overrides
+//****************************************************************************************************
+	@Override
+	public String toString()
+	{
+		String returnString = "AgencyId: " + this.AgencyId
+				+ ", Address: " + this.AgncyAddress
+				+ ", City: " + this.AgncyCity
+				+ ", Province: " + this.AgncyProv
+				+ ", Country: " + this.AgncyCountry
+				+ ", Postal: " + this.AgncyPostal
+				+ ", Phone: " + this.AgncyPhone
+				+ ", Fax: " + this.AgncyFax;
+		return returnString;
+	}
+	//Getters and Setters
+//****************************************************************************************************
 	public int getAgencyId()
 	{
 		return AgencyId;
@@ -69,71 +194,5 @@ public class Agency
 	public void setAgncyFax(String agncyFax)
 	{
 		AgncyFax = agncyFax;
-	}
-	private int AgencyId; 
-	private String AgncyAddress; 
-	private String AgncyCity;
-	private String AgncyProv;
-	private String AgncyPostal;
-	private String AgncyCountry; 
-	private String AgncyPhone; 
-	private String AgncyFax;
-	
-	private static final String TABLE = "Agencies";
-	private static final String PRIMARYKEY = "AgencyId";
-	
-	public static ArrayList<Agency> getAgencys() throws SQLException
-	{
-		
-
-			ArrayList<Agency> myList = new ArrayList<Agency>();
-			try
-			{
-				for (Object object : DataBase.getTable(TABLE,Agency.class))
-				{
-					myList.add((Agency)object);
-				}
-			}
-			catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		
-		
-		return myList;
-		
-	}
-	
-	public static Agency getAgencyById(int Id) throws SQLException
-	{
-		Agency myAgency = null;
-		try
-		{
-			myAgency = (Agency)DataBase.getById(TABLE,PRIMARYKEY,Id,Agency.class);
-		}
-		catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		return myAgency;
-		
-	}
-	@Override
-	public String toString()
-	{
-		String returnString = "AgencyId: " + this.AgencyId
-				+ ", Address: " + this.AgncyAddress
-				+ ", City: " + this.AgncyCity
-				+ ", Province: " + this.AgncyProv
-				+ ", Country: " + this.AgncyCountry
-				+ ", Postal: " + this.AgncyPostal
-				+ ", Phone: " + this.AgncyPhone
-				+ ", Fax: " + this.AgncyFax;
-		return returnString;
 	}
 }

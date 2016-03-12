@@ -26,6 +26,8 @@ public class Agent
 	private final static String TABLE = "Agents";
 	private final static String PRIMARYKEY = "AgentId";
 	
+	//Constructors
+//****************************************************************************************************
 	public Agent(){}
 	
 	/**
@@ -53,6 +55,85 @@ public class Agent
 		this.AgentId = agentId;
 	}
 	
+	//Methods
+//****************************************************************************************************
+
+	/**
+	 * Retrieves an ArrayList of all Agents
+	 * @return -ArrayList<Agent>
+	 * @throws SQLException
+	 */
+	public static ArrayList<Agent> getAgents() throws SQLException
+	{
+			ArrayList<Agent> myList = new ArrayList<Agent>();
+			try
+			{
+				for (Object object : DataBase.getTable(TABLE,Agent.class))
+				{
+					myList.add((Agent)object);
+				}
+			}
+			catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		return myList;		
+	}
+	
+	/**
+	 * Retrieves an Agent
+	 * @param Id -Id of the agent you wish to retrieve
+	 * @return Agent
+	 * @throws SQLException
+	 */
+	public static Agent getAgentById(int Id) throws SQLException
+	{
+		Agent myAgent = null;
+		try
+		{
+			myAgent = (Agent)DataBase.getById(TABLE,PRIMARYKEY,Id,Agent.class);
+		}
+		catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return myAgent;	
+	}
+	
+	/**
+	 * Retrieves Agent id's and FirstNames for display in a DropDown or ComboBox
+	 * @return HashMap<Integer,String>
+	 * @throws SQLException
+	 */
+	public static HashMap<Integer,String> getAgentComboList() throws SQLException
+	{
+		HashMap<Integer,String> myAgentCombo= null;
+		try
+		{
+			myAgentCombo = DataBase.getComboList(TABLE,PRIMARYKEY,"AgtFirstName");;
+		}
+		catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return myAgentCombo;	
+	}
+	
+	//Overrides
+//****************************************************************************************************
+	 
+	@Override
+	public String toString()
+	{
+		String returnString = "AgencyId: " + this.AgencyId + ",   First Name: " + this.AgtFirstName + ", Last Name: " + this.AgtLastName+ ", MiddleIntial: " + this.AgtMiddleInitial+ ", BusPhone: " + this.AgtBusPhone + ", Email: " + this.AgtEmail + ", Position: " + this.AgtPosition + ", Agent Id: " + this.AgentId;
+		return returnString;
+	}
+	
+	//Getters and Setters
+//****************************************************************************************************
 	public int getAgencyId() 
 	{
 		return AgencyId;
@@ -116,53 +197,5 @@ public class Agent
 	public void setAgentId(int agentId) 
 	{
 		this.AgentId = agentId;
-	}
-	
-	public static ArrayList<Agent> getAgents() throws SQLException
-	{
-		
-
-			ArrayList<Agent> myList = new ArrayList<Agent>();
-			try
-			{
-				for (Object object : DataBase.getTable(TABLE,Agent.class))
-				{
-					myList.add((Agent)object);
-				}
-			}
-			catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		
-		
-		return myList;
-		
-	}
-	
-	public static Agent getAgentById(int Id) throws SQLException
-	{
-		Agent myAgent = null;
-		try
-		{
-			myAgent = (Agent)DataBase.getById(TABLE,PRIMARYKEY,Id,Agent.class);
-		}
-		catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		return myAgent;
-		
-	}
-	@Override
-	public String toString()
-	{
-		String returnString = "AgencyId: " + this.AgencyId + ",   First Name: " + this.AgtFirstName + ", Last Name: " + this.AgtLastName+ ", MiddleIntial: " + this.AgtMiddleInitial+ ", BusPhone: " + this.AgtBusPhone + ", Email: " + this.AgtEmail + ", Position: " + this.AgtPosition + ", Agent Id: " + this.AgentId;
-		return returnString;
 	}
 }
