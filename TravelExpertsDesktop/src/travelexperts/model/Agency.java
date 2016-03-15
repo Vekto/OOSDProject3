@@ -15,9 +15,18 @@ public class Agency
 	private String AgncyCountry; 
 	private String AgncyPhone; 
 	private String AgncyFax;
-	
 	private static final String TABLE = "Agencies";
 	private static final String PRIMARYKEY = "AgencyId";
+	private static final String[] updateColumns = 
+			{ 
+				"AgncyAddress",
+		    	"AgncyCity", 
+		    	"AgncyProv",
+		    	"AgncyPostal",
+		    	"AgncyCountry", 
+		    	"AgncyPhone", 
+		    	"AgncyFax"
+		    };
 
 	//Constructors
 //****************************************************************************************************
@@ -113,6 +122,24 @@ public class Agency
 		}
 		return myAgencyCombo;
 	}
+		public static int updateAgent(int Id,Agency myAgency) throws SQLException
+		{
+			int count = 0;
+			
+			try
+			{
+				count = DataBase.updateEntity(TABLE, updateColumns, PRIMARYKEY, Id, myAgency);
+			}
+			catch (IllegalArgumentException | IllegalAccessException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			return count;
+		}
+	
 
 	//Overrides
 //****************************************************************************************************

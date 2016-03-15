@@ -102,6 +102,15 @@ public class MainApp
 			System.out.println("An error has occured in retrieving your data");
 		}
 		System.out.println(myAgency.toString());
+		try
+		{
+			System.out.println(Agency.updateAgent(1, myAgency));
+		}
+		catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 

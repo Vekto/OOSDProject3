@@ -4,6 +4,7 @@ import java.awt.List;
 import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -14,6 +15,7 @@ import java.util.Map;
 import travelexperts.model.Agent;
 import javax.naming.spi.DirStateFactory.Result;
 
+
 import com.sun.glass.ui.CommonDialogs.Type;
 import com.sun.org.apache.xml.internal.resolver.helpers.PublicId;
 import com.sun.rowset.internal.Row;
@@ -22,6 +24,7 @@ import com.sun.xml.internal.ws.spi.db.FieldSetter;
 
 import jdk.internal.dynalink.beans.StaticClass;
 import jdk.nashorn.internal.objects.annotations.Where;
+
 
 public class DataBase
 {
@@ -116,6 +119,55 @@ public class DataBase
 	    return myHash;
 	}
 	
+	
+	public static int updateEntity(String Table,String[] myColumns, String Id,int IdValue, Object myEntity) throws SQLException, IllegalArgumentException, IllegalAccessException
+	{
+		int updateCount=0;
+		int i = 1;
+		Connection conn = getConnection();
+		String myQuery = "UPDATE " + Table +
+						 " Set ";
+		for(String column : myColumns)
+		{
+			
+			if (i != myColumns.length)
+			{
+				myQuery += column + " = ?,";
+			}
+			else
+			{
+				myQuery += column + " =? ";
+			}
+			i++;
+		}
+		myQuery += "WHERE " + Id +" = " + IdValue;
+		i=1;
+		PreparedStatement statement = conn.prepareStatement(myQuery);
+		for(String column : myColumns)
+		{
+		try
+		{	
+			Field field = myEntity.getClass().getDeclaredField(column);
+			field.setAccessible(true);
+			System.out.println();
+			statement.setObject(i, field.get(myEntity));
+			System.out.println(statement.toString());
+			i++;
+		}
+		catch (NoSuchFieldException | SecurityException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		
+		}
+		System.out.println(statement.toString());
+		}
+		updateCount = statement.executeUpdate();
+		
+		
+		
+		return updateCount;
+	}
 	
 	
 	public static Object entityConstructor(HashMap<String,Object> myHash,Class<?> entity) throws IllegalAccessException, NoSuchFieldException, SecurityException 
