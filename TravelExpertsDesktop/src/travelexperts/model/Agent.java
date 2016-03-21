@@ -1,15 +1,9 @@
 package travelexperts.model;
 
-import java.awt.List;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
-import com.sun.glass.ui.TouchInputSupport;
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
-
-import sun.management.resources.agent;
 
 public class Agent
 {
@@ -22,6 +16,17 @@ public class Agent
 	private String AgtPosition;
 	private int AgentId;
 	private String AgtFirstName;
+	private static final String[] UPDATE_COLUMNS = 
+			{ 
+				"AgtBusPhone",
+		    	"AgtEmail", 
+		    	"AgencyId",
+		    	"AgtLastName",
+		    	"AgtMiddleInitial", 
+		    	"AgtPosition", 
+		    	"AgentId",
+		    	"AgtFirstName"
+		    };
 	
 	private final static String TABLE = "Agents";
 	private final static String PRIMARYKEY = "AgentId";
@@ -73,7 +78,7 @@ public class Agent
 					myList.add((Agent)object);
 				}
 			}
-			catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e)
+			catch (IllegalArgumentException | SecurityException e)
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -94,7 +99,7 @@ public class Agent
 		{
 			myAgent = (Agent)DataBase.getById(TABLE,PRIMARYKEY,Id,Agent.class);
 		}
-		catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e)
+		catch (IllegalArgumentException | SecurityException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -114,12 +119,37 @@ public class Agent
 		{
 			myAgentCombo = DataBase.getComboList(TABLE,PRIMARYKEY,"AgtFirstName");;
 		}
-		catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e)
+		catch (IllegalArgumentException | SecurityException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return myAgentCombo;	
+	}
+	
+	public static int updateAgent(Agent myAgent, Agent myOldAgent) 
+	{
+		int count = 0;
+		
+		
+		
+			count = DataBase.updateEntity(TABLE, UPDATE_COLUMNS, PRIMARYKEY, myAgent.AgentId, myAgent, myOldAgent);
+		
+		
+		
+		return count;
+	}
+	
+	public static int insertAgent(Agent myAgent) 
+	{
+		int count = 0;
+		
+		
+		
+			count = DataBase.insertEntity(TABLE, UPDATE_COLUMNS, PRIMARYKEY, myAgent.AgentId, myAgent);
+		
+		
+		return count;
 	}
 	
 	//Overrides

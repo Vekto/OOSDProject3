@@ -62,7 +62,7 @@ public class TravelPackage
 					myList.add((TravelPackage)object);
 				}
 			}
-			catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e)
+			catch (IllegalArgumentException | SecurityException e)
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -83,7 +83,7 @@ public class TravelPackage
 		{
 			myPackage = (TravelPackage)DataBase.getById(TABLE,PRIMARYKEY,Id,TravelPackage.class);;
 		}
-		catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e)
+		catch (IllegalArgumentException | SecurityException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -103,7 +103,7 @@ public class TravelPackage
 		{
 			myPkgCombo = DataBase.getComboList(TABLE,PRIMARYKEY,"PkgName");;
 		}
-		catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e)
+		catch (IllegalArgumentException | SecurityException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();

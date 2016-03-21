@@ -15,9 +15,9 @@ public class Agency
 	private String AgncyCountry; 
 	private String AgncyPhone; 
 	private String AgncyFax;
-	private static final String TABLE = "Agencies";
+	private static final String TABLE = "agencies";
 	private static final String PRIMARYKEY = "AgencyId";
-	private static final String[] updateColumns = 
+	private static final String[] UPDATE_COLUMNS = 
 			{ 
 				"AgncyAddress",
 		    	"AgncyCity", 
@@ -75,7 +75,7 @@ public class Agency
 					myList.add((Agency)object);
 				}
 			}
-			catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e)
+			catch (IllegalArgumentException | SecurityException e)
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -96,7 +96,7 @@ public class Agency
 		{
 			myAgency = (Agency)DataBase.getById(TABLE,PRIMARYKEY,Id,Agency.class);
 		}
-		catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e)
+		catch (IllegalArgumentException | SecurityException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -115,26 +115,34 @@ public class Agency
 		{
 			myAgencyCombo = DataBase.getComboList(TABLE,PRIMARYKEY,"AgncyAddress");;
 		}
-		catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e)
+		catch (IllegalArgumentException | SecurityException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return myAgencyCombo;
 	}
-		public static int updateAgent(int Id,Agency myAgency) throws SQLException
+	
+		public static int updateAgency(Agency myAgency, Agency myOldAgency) 
 		{
 			int count = 0;
 			
-			try
-			{
-				count = DataBase.updateEntity(TABLE, updateColumns, PRIMARYKEY, Id, myAgency);
-			}
-			catch (IllegalArgumentException | IllegalAccessException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
+			
+				count = DataBase.updateEntity(TABLE, UPDATE_COLUMNS, PRIMARYKEY, myAgency.AgencyId, myAgency, myOldAgency);
+			
+			
+			
+			return count;
+		}
+		
+		public static int insertAgency(Agency myAgency) 
+		{
+			int count = 0;
+			
+			
+			
+				count = DataBase.insertEntity(TABLE, UPDATE_COLUMNS, PRIMARYKEY, myAgency.AgencyId, myAgency);
 			
 			
 			return count;

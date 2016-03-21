@@ -1,8 +1,12 @@
 package travelexperts.model;
 
+
 import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+
+
 
 public class Customer
 {
@@ -22,6 +26,21 @@ public class Customer
 	
 	private final static String TABLE = "Customers";
 	private static final String PRIMARYKEY = "CustomerId";
+	private static final String[] UPDATE_COLUMNS = 
+			{ 
+					"CustFirstName",
+					"CustLastName",
+					"CustAddress",
+					"CustCity",
+					"CustProv",
+					"CustPostal",
+					"CustCountry",
+					"CustHomePhone",
+					"CustBusPhone",
+					"CustEmail",
+					"AgentId",
+					"CustomerId"
+		    };
 	
 	//Constructors
 //****************************************************************************************************	
@@ -76,7 +95,7 @@ public class Customer
 					myList.add((Customer)object);
 				}
 			}
-			catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e)
+			catch (IllegalArgumentException | SecurityException e)
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -97,7 +116,7 @@ public class Customer
 		{
 			myCustomer = (Customer)DataBase.getById(TABLE,PRIMARYKEY,Id,Customer.class);;
 		}
-		catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e)
+		catch (IllegalArgumentException | SecurityException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -117,12 +136,24 @@ public class Customer
 		{
 			myCustCombo = DataBase.getComboList(TABLE,PRIMARYKEY,"CustFirstName");;
 		}
-		catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e)
+		catch (IllegalArgumentException | SecurityException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return myCustCombo;
+	}
+	
+	public static int insertCustomer(Customer myCustomer) 
+	{
+		int count = 0;
+		
+		
+		
+			count = DataBase.insertEntity(TABLE, UPDATE_COLUMNS, PRIMARYKEY, myCustomer.CustomerId, myCustomer);
+		
+		
+		return count;
 	}
 	
 	//Overrides
