@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+
+
+import travelexperts.util.ComboPair;
+
 public class TravelPackage
 {
 
@@ -96,9 +100,9 @@ public class TravelPackage
 	 * @return HashMap<Integer,String>
 	 * @throws SQLException
 	 */
-	public static HashMap<Integer,String> getPackageComboList() throws SQLException
+	public static ArrayList<ComboPair> getPackageComboList() throws SQLException
 	{
-		HashMap<Integer,String> myPkgCombo= null;
+		ArrayList<ComboPair> myPkgCombo= null;
 		try
 		{
 			myPkgCombo = DataBase.getComboList(TABLE,PRIMARYKEY,"PkgName");;

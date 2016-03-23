@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -12,30 +13,34 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
 import travelexperts.model.DataBase;
 import travelexperts.model.Reward;
+
+import travelexperts.util.ComboPair;
 
 public class EditRewardDialogController
 {
 
 	@FXML
-	private ComboBox<String> typeCombo;
+	private ComboBox<ComboPair> typeCombo;
 	@FXML
 	private TextField numberField;
 	
     private Stage dialogStage;
     private Reward reward;
     private boolean okClicked = false;
-    private HashMap<Integer, String> typeHash;
+    private ArrayList<ComboPair> typeHash;
+    private ObservableList<ComboPair> typeList;
     /**
      * Initializes the controller class. This method is automatically called
      * after the fxml file has been loaded.
      */
     @FXML
     private void initialize() {
-    	typeHash = DataBase.getComboList("Rewards","RewardId", "RwdName");
-    	
-    	typeCombo.getItems().addAll(typeHash.values());
+    	//typeHash = DataBase.getComboList("Rewards","RewardId", "RwdName");
+    	typeList = FXCollections.observableArrayList(DataBase.getComboList("Rewards","RewardId", "RwdName"));
+    	typeCombo.getItems().addAll(typeList);
     }
 
     /**
@@ -54,8 +59,8 @@ public class EditRewardDialogController
      */
     public void setReward(Reward reward) {
         this.reward = reward;
-
-       typeCombo.setValue(reward.getType());
+        //ComboHash<Integer,String> currentReward = new ComboHash<Integer,String>(reward.getRewardId(),reward.ge)
+       //typeCombo.getSelectionModel().select(););;
        numberField.setText(reward.getRwdNumber());
 
     }
@@ -76,7 +81,7 @@ public class EditRewardDialogController
     private void handleOk() {
         if (isInputValid()) {
             reward.setRwdNumber(numberField.getText());
-            reward.setType(typeCombo.getSelectionModel().getSelectedItem());
+            reward.setType(typeCombo.getSelectionModel().getSelectedItem().toString());
             reward.setRewardId(typeCombo.getSelectionModel().getSelectedIndex()+1);
             okClicked = true;
             dialogStage.close();

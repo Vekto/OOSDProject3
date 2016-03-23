@@ -24,36 +24,7 @@
 
 <AnchorPane prefHeight="550.0" prefWidth="600.0" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="travelexperts.controller.CustomersController">
    <children>
-      <ToolBar layoutX="94.0" layoutY="2.0" prefHeight="40.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <items>
-            <StackPane prefHeight="25.0" prefWidth="70.0">
-               <children>
-                  <Ellipse onMouseClicked="#onBackClick" radiusX="30.0" radiusY="18.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" styleClass="ellipse">
-                     <fill>
-                        <LinearGradient endX="0.4854368932038835" endY="1.0" startX="0.4854368932038835">
-                           <stops>
-                              <Stop color="#61a2b1" />
-                              <Stop color="#2a5058" offset="1.0" />
-                           </stops>
-                        </LinearGradient>
-                     </fill>
-                  </Ellipse>
-                  <Text fill="#e4dddd" fontSmoothingType="LCD" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" text="Back">
-                     <font>
-                        <Font name="Arial Narrow Bold" size="15.0" />
-                     </font>
-                  </Text>
-               </children>
-            </StackPane>
-            <TextField fx:id="searchField" prefHeight="37.0" prefWidth="205.0">
-               <effect>
-                  <DropShadow color="#61a2b1" />
-               </effect>
-            </TextField>
-            <Button focusTraversable="false" mnemonicParsing="false" onAction="#onSearchClick" prefHeight="33.0" prefWidth="97.0" text="Search" />
-         </items>
-      </ToolBar>
-      <TabPane layoutX="224.0" layoutY="77.0" prefHeight="425.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+      <TabPane fx:id="myTabPane" layoutX="224.0" layoutY="77.0" prefHeight="425.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
         <tabs>
           <Tab text="Customer Info">
                <content>
@@ -155,24 +126,80 @@
                            <children>
                               <TableView fx:id="BookingTable" prefHeight="200.0" prefWidth="200.0" tableMenuButtonVisible="true" GridPane.columnSpan="2" GridPane.rowSpan="2">
                                 <columns>
-                                    <TableColumn fx:id="BookingIdCol" prefWidth="75.0" text="Booking Id" />
-                                  <TableColumn fx:id="BookingDateCol" prefWidth="75.0" text="Date" />
-                                  <TableColumn fx:id="BookingNoCol" prefWidth="75.0" text="Booking No." />
-                                    <TableColumn fx:id="TravelerCountCol" prefWidth="75.0" text="Traveler Count" />
-                                    <TableColumn fx:id="TripTypeIdCol" prefWidth="75.0" text="Type" />
-                                    <TableColumn fx:id="PackageIdCol" prefWidth="75.0" text="PackageId" />
+                                    <TableColumn fx:id="BookingIdCol" prefWidth="113.0" text="Booking Id" />
+                                  <TableColumn fx:id="BookingDateCol" prefWidth="96.0" text="Date" />
+                                  <TableColumn fx:id="BookingNoCol" prefWidth="139.0" text="Booking No." />
+                                    <TableColumn fx:id="TravelerCountCol" prefWidth="99.0" text="Travelers" />
+                                    <TableColumn fx:id="TripTypeIdCol" prefWidth="39.0" text="Type" />
+                                    <TableColumn fx:id="PackageIdCol" prefWidth="125.0" text="PackageId" />
                                 </columns>
                                  <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                  </columnResizePolicy>
+                                 <effect>
+                                    <DropShadow color="#61a2b1" />
+                                 </effect>
                               </TableView>
-                              <Button mnemonicParsing="false" onAction="#loadDetailClick" text="Button" GridPane.rowIndex="2" />
+                              <Button mnemonicParsing="false" onAction="#loadDetailClick" text="View Details" GridPane.rowIndex="2" />
                            </children>
                         </GridPane>
                      </children></AnchorPane>
             </content>
           </Tab>
+            <Tab text="Billing Info">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="CardNumber" layoutX="199.0" layoutY="120.0" prefHeight="37.0" prefWidth="157.0" />
+                        <Label layoutX="69.0" layoutY="126.0" text="Card Number" />
+                        <ListView fx:id="CardListView" layoutX="129.0" layoutY="250.0" prefHeight="122.0" prefWidth="343.0">
+                           <effect>
+                              <DropShadow color="#61a2b1" />
+                           </effect></ListView>
+                        <ComboBox fx:id="CardTypeCombo" layoutX="199.0" layoutY="53.0" prefHeight="37.0" prefWidth="157.0" styleClass="text-field" />
+                        <TextField fx:id="CardExpMonth" layoutX="208.0" layoutY="200.0" prefHeight="37.0" prefWidth="45.0" />
+                        <TextField fx:id="CardExpYear" layoutX="300.0" layoutY="200.0" prefHeight="37.0" prefWidth="43.0" />
+                        <Label layoutX="274.0" layoutY="205.0" text="/" />
+                        <Label layoutX="133.0" layoutY="61.0" text="Type" />
+                        <Label layoutX="141.0" layoutY="205.0" text="Expiry" />
+                        <Label layoutX="213.0" layoutY="170.0" text="MM" />
+                        <Label layoutX="311.0" layoutY="170.0" text="YY" />
+                        <Button focusTraversable="false" layoutX="390.0" layoutY="203.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="60.0" text="Add" />
+                        <Button fx:id="CardDeleteButton" focusTraversable="false" layoutX="390.0" layoutY="379.0" mnemonicParsing="false" text="Delete" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
         </tabs>
       </TabPane>
+      <ToolBar layoutX="94.0" layoutY="2.0" prefHeight="40.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <items>
+            <StackPane prefHeight="25.0" prefWidth="70.0">
+               <children>
+                  <Ellipse onMouseClicked="#onBackClick" radiusX="30.0" radiusY="18.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" styleClass="ellipse">
+                     <fill>
+                        <LinearGradient endX="0.4854368932038835" endY="1.0" startX="0.4854368932038835">
+                           <stops>
+                              <Stop color="#61a2b1" />
+                              <Stop color="#2a5058" offset="1.0" />
+                           </stops>
+                        </LinearGradient>
+                     </fill>
+                  </Ellipse>
+                  <Text fill="#e4dddd" fontSmoothingType="LCD" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" text="Back">
+                     <font>
+                        <Font name="Arial Narrow Bold" size="15.0" />
+                     </font>
+                  </Text>
+               </children>
+            </StackPane>
+            <TextField fx:id="searchField" prefHeight="37.0" prefWidth="205.0">
+               <effect>
+                  <DropShadow color="#61a2b1" />
+               </effect>
+            </TextField>
+            <Button focusTraversable="false" mnemonicParsing="false" onAction="#onSearchClick" prefHeight="33.0" prefWidth="97.0" text="Search" />
+         </items>
+      </ToolBar>
    </children>
 </AnchorPane>

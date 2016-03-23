@@ -70,7 +70,7 @@ public class Reward
 	{
 		if(DataBase.concurrencyCheck(reward, TABLE, UPDATE_COLUMNS, "RwdNumber", reward.getRwdNumber()))
 		{
-		DataBase.deleteById(TABLE, PRIMARYKEY, reward.getRwdNumber(), reward);
+		DataBase.deleteById(TABLE, "RwdNumber", reward.getRwdNumber(), reward);
 		}
 	}
 	

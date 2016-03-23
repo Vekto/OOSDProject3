@@ -4,6 +4,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import travelexperts.util.ComboPair;
+
+
 
 public class Agent
 {
@@ -112,9 +115,9 @@ public class Agent
 	 * @return HashMap<Integer,String>
 	 * @throws SQLException
 	 */
-	public static HashMap<Integer,String> getAgentComboList() throws SQLException
+	public static ArrayList<ComboPair> getAgentComboList() throws SQLException
 	{
-		HashMap<Integer,String> myAgentCombo= null;
+		ArrayList<ComboPair> myAgentCombo= null;
 		try
 		{
 			myAgentCombo = DataBase.getComboList(TABLE,PRIMARYKEY,"AgtFirstName");;

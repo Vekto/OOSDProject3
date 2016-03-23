@@ -12,6 +12,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+
+
+import travelexperts.util.ComboPair;
 import travelexperts.util.EncryptionUtil;
 
 
@@ -142,7 +146,7 @@ public class DataBase
 		return null;
 	}
 	
-	public static HashMap<Integer, String> getComboList(String table, String idField, String myField)
+	public static ArrayList<ComboPair> getComboList(String table, String idField, String myField)
 	{
 
 		try
@@ -151,19 +155,18 @@ public class DataBase
 			Statement statement = conn.createStatement();
 			ResultSet rs;
 			rs = statement.executeQuery("select " + idField + "," + myField + " from " + table);
-
-			HashMap<Integer, String> myHash = new HashMap<Integer, String>();
+			ArrayList<ComboPair> myList = new ArrayList<ComboPair>();
+			
 			while (rs.next())
 			{
-
-				myHash.put(rs.getInt(1), rs.getString(2));
-
+				ComboPair myComboPair = new ComboPair(rs.getInt(1), rs.getString(2));
+				myList.add(myComboPair);
 			}
 			
 			rs.close();
 			statement.close();
 			conn.close();
-			return myHash;
+			return myList;
 		}
 		catch (SQLException e)
 		{
@@ -285,7 +288,7 @@ public class DataBase
 		{
 		Connection conn = getConnection();
 		Statement statement = conn.createStatement();
-		String sql = "DELETE FROM " + table + " WHERE " + idField + " = '" + idValue.toString() + "'";
+		String sql = "DELETE FROM " + table + " WHERE " + idField + "='" + idValue + "'";
 		System.out.println(sql);
 		success = statement.execute(sql);	
 		}
@@ -302,6 +305,7 @@ public class DataBase
 
 		try
 		{
+			int i=1;
 			Connection conn = getConnection();
 			Statement statement = conn.createStatement();
 			String sqlString = "select " + idField + " from " + table + " where ";
@@ -317,9 +321,13 @@ public class DataBase
 				{
 					sqlString += column +  " IS NULL";
 				}
+				if(i <myColumns.length)
+				{
 				sqlString += " && ";
+				}
+				i++;
 			}
-			sqlString += idField + " = " + idValue;
+			//sqlString += idField + " = " + idValue;
 			System.out.println(sqlString);
 
 			ResultSet rs = statement.executeQuery(sqlString);

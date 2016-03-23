@@ -21,6 +21,7 @@ import travelexperts.model.Fee;
 import travelexperts.model.Region;
 
 import travelexperts.model.TripClass;
+import travelexperts.util.DateUtil;
 
 public class BookingDetailsDialogController
 {
@@ -89,25 +90,26 @@ public class BookingDetailsDialogController
         try
 		{
 			feeCombo.setValue(Fee.getFeeById(oldDetail.getFeeId()));
+			regionCombo.setValue(Region.getRegionById(oldDetail.getRegionId()));
+			classCombo.setValue(TripClass.getTripClassById(oldDetail.getClassId()));
 		}
 		catch (SQLException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        Instant instant = Instant.ofEpochMilli(oldDetail.getTripStart().getDate());
-        LocalDate res = LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate();
-        startDate.setValue( res);
- endDate = null;
- itNumberField.setText(oldDetail.getItineraryNo().toString());
-descriptionField.setText(oldDetail.getDescription());
-destinationField.setText(oldDetail.getDestination());
-prodSupField.setText(oldDetail.getProductSupplierId().toString());
- basePriceField.setText(oldDetail.getBasePrice().toString());
- commissionField.setText(oldDetail.getAgencyCommission().toString());
- totalLabel.setText((oldDetail.getBasePrice().doubleValue() + oldDetail.getAgencyCommission().doubleValue() + feeCombo.getSelectionModel().getSelectedItem().getFeeAmt().doubleValue()) + "");
+		startDate.setValue(DateUtil.DateToLocalDate(oldDetail.getTripStart()));
+		endDate.setValue(DateUtil.DateToLocalDate(oldDetail.getTripStart()));
+		itNumberField.setText(oldDetail.getItineraryNo().toString());
+		descriptionField.setText(oldDetail.getDescription());
+		destinationField.setText(oldDetail.getDestination());
+		prodSupField.setText(oldDetail.getProductSupplierId().toString());
+		basePriceField.setText(oldDetail.getBasePrice().toString());
+		commissionField.setText(oldDetail.getAgencyCommission().toString());
+		totalLabel.setText((oldDetail.getBasePrice().doubleValue() + oldDetail.getAgencyCommission().doubleValue()
+				+ feeCombo.getSelectionModel().getSelectedItem().getFeeAmt().doubleValue()) + "");
 
-    }
+	}
 
     /**
      * Returns true if the user clicked OK, false otherwise.

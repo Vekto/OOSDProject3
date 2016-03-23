@@ -14,8 +14,6 @@ public class Fee
 	private static final String TABLE = "fees";
 	private static final String PRIMARYKEY = "FeeId";
 	
-
-
 	
 	/**
 	 * 
@@ -75,6 +73,14 @@ public class Fee
 	}
 	
 	
+	@Override
+	public String toString()
+	{
+		String myString = this.FeeName + ": $" + this.FeeAmt;
+		return myString;
+	}
+
+
 	public String getFeeId()
 	{
 		return FeeId;

@@ -22,9 +22,10 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="550.0" prefWidth="600.0" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="travelexperts.controller.CustomersController">
-   <children>
-      <TabPane fx:id="myTabPane" layoutX="224.0" layoutY="77.0" prefHeight="425.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+<AnchorPane prefHeight="550.0" prefWidth="600.0" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="travelexperts.controller.AgentsController">
+	<!-- TODO Add Nodes -->
+	<children>
+	      <TabPane fx:id="myTabPane" layoutX="224.0" layoutY="77.0" prefHeight="425.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
         <tabs>
           <Tab text="Customer Info">
                <content>
@@ -96,8 +97,8 @@
                            </effect>
                         </TextField>
                         <Label layoutX="46.0" layoutY="168.0" text="Country:" />
-                        <Button focusTraversable="false" layoutX="376.0" layoutY="364.0" mnemonicParsing="false" onAction="#addRewardClick" prefHeight="27.0" prefWidth="57.0" text="Add" />
-                        <Button focusTraversable="false" layoutX="474.0" layoutY="364.0" mnemonicParsing="false" onAction="#deleteRewardClick" text="Delete" />
+                        <Button focusTraversable="false" layoutX="376.0" layoutY="364.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="57.0" text="Add" />
+                        <Button focusTraversable="false" layoutX="474.0" layoutY="364.0" mnemonicParsing="false"  text="Delete" />
                         <ComboBox fx:id="agentComboBox" layoutX="131.0" layoutY="364.0" prefWidth="150.0">
                            <effect>
                               <DropShadow color="#61a2b1" />
@@ -140,39 +141,15 @@
                                     <DropShadow color="#61a2b1" />
                                  </effect>
                               </TableView>
-                              <Button mnemonicParsing="false" onAction="#loadDetailClick" text="View Details" GridPane.rowIndex="2" />
+                              <Button mnemonicParsing="false" text="View Details" GridPane.rowIndex="2" />
                            </children>
                         </GridPane>
                      </children></AnchorPane>
             </content>
           </Tab>
-            <Tab text="Billing Info">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <TextField fx:id="CardNumber" layoutX="199.0" layoutY="120.0" prefHeight="37.0" prefWidth="157.0" />
-                        <Label layoutX="69.0" layoutY="126.0" text="Card Number" />
-                        <ListView fx:id="CardListView" layoutX="129.0" layoutY="250.0" prefHeight="122.0" prefWidth="343.0">
-                           <effect>
-                              <DropShadow color="#61a2b1" />
-                           </effect></ListView>
-                        <ComboBox fx:id="CardTypeCombo" layoutX="199.0" layoutY="53.0" prefHeight="37.0" prefWidth="157.0" styleClass="text-field" />
-                        <TextField fx:id="CardExpMonth" layoutX="208.0" layoutY="200.0" prefHeight="37.0" prefWidth="45.0" />
-                        <TextField fx:id="CardExpYear" layoutX="300.0" layoutY="200.0" prefHeight="37.0" prefWidth="43.0" />
-                        <Label layoutX="274.0" layoutY="205.0" text="/" />
-                        <Label layoutX="133.0" layoutY="61.0" text="Type" />
-                        <Label layoutX="141.0" layoutY="205.0" text="Expiry" />
-                        <Label layoutX="213.0" layoutY="170.0" text="MM" />
-                        <Label layoutX="311.0" layoutY="170.0" text="YY" />
-                        <Button focusTraversable="false" layoutX="390.0" layoutY="203.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="60.0" text="Add" />
-                        <Button fx:id="CardDeleteButton" focusTraversable="false" layoutX="390.0" layoutY="379.0" mnemonicParsing="false" text="Delete" />
-                     </children>
-                  </AnchorPane>
-              </content>
-            </Tab>
-        </tabs>
-      </TabPane>
-      <ToolBar layoutX="94.0" layoutY="2.0" prefHeight="40.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+          </tabs>
+          </TabPane>
+	      <ToolBar layoutX="94.0" layoutY="2.0" prefHeight="40.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
             <StackPane prefHeight="25.0" prefWidth="70.0">
                <children>
@@ -198,8 +175,9 @@
                   <DropShadow color="#61a2b1" />
                </effect>
             </TextField>
-            <Button focusTraversable="false" mnemonicParsing="false" onAction="#onSearchClick" prefHeight="33.0" prefWidth="97.0" text="Search" />
+            <Button focusTraversable="false" mnemonicParsing="false"  prefHeight="33.0" prefWidth="97.0" text="Search" />
          </items>
       </ToolBar>
-   </children>
+      </children>
 </AnchorPane>
+

@@ -1,6 +1,7 @@
 package travelexperts.model;
 
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Region
@@ -12,6 +13,7 @@ public class Region
 	private String RegionName;
 	
 	private static final String TABLE = "regions";
+	private static final String PRIMARYKEY = "RegionId";
 
 	/**
 	 * 
@@ -46,6 +48,27 @@ public class Region
 			e.printStackTrace();
 		}
 		return(myList);
+	}
+	
+	@Override
+	public String toString()
+	{
+		String myString = this.RegionName;
+		return myString;
+	}
+	public static Region getRegionById(String Id) throws SQLException
+	{
+		Region myRegion= null;
+		try
+		{
+			myRegion = (Region)DataBase.getById(TABLE,PRIMARYKEY,Id,Region.class);;
+		}
+		catch (IllegalArgumentException | SecurityException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return myRegion;		
 	}
 
 	public String getRegionId()

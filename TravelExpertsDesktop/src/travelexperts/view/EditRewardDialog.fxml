@@ -11,7 +11,7 @@
 <AnchorPane prefHeight="222.0" prefWidth="305.0" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="travelexperts.controller.EditRewardDialogController">
    <children>
       <Label layoutX="68.0" layoutY="20.0" styleClass="label-Large" text="Add/Edit Reward" />
-      <ComboBox fx:id="typeCombo" layoutX="141.0" layoutY="69.0" prefWidth="150.0">
+      <ComboBox fx:id="typeCombo" layoutX="141.0" layoutY="69.0" prefWidth="150.0" styleClass="text-field">
          <effect>
             <DropShadow />
          </effect></ComboBox>
@@ -22,6 +22,6 @@
       <Button cancelButton="true" focusTraversable="false" layoutX="196.0" layoutY="167.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
    </children>
    <effect>
-      <InnerShadow choke="0.75" height="50.0" radius="24.5" width="50.0" />
+      <InnerShadow choke="0.75" color="#61a2b1" height="50.0" radius="24.5" width="50.0" />
    </effect>
 </AnchorPane>

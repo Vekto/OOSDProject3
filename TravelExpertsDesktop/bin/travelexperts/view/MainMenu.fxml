@@ -40,7 +40,7 @@
                      </input></Reflection>
                </effect>
             </Button>
-            <Button focusTraversable="false" minWidth="91.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="91.0" text="Agents">
+            <Button focusTraversable="false" minWidth="91.0" mnemonicParsing="false" onAction="#onAgentsClick" prefHeight="91.0" prefWidth="91.0" text="Agents">
                <effect>
                   <Reflection>
                      <input>

@@ -12,6 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import travelexperts.model.Agency;
 import travelexperts.model.Agent;
 import travelexperts.model.BookingDetail;
@@ -126,6 +127,26 @@ public class MainApp extends Application
 	            e.printStackTrace();
 	        }
 	    }
+	    public void showAgentsView()
+	    {
+	        try
+	        {
+	         //load the FXML file and set it into the center of the main layout
+	            FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("../view/Agents.fxml"));
+	            AnchorPane agentsPage = (AnchorPane) loader.load();
+	            rootLayout.setCenter(agentsPage);
+	            
+	            
+	            //Give the controller access to the main app
+	            AgentsController controller = loader.getController();
+	            controller.setMainApp(this);
+
+	        }
+	        catch (IOException e)
+	        {
+	            e.printStackTrace();
+	        }
+	    }
 	    
 	    public boolean showEditRewardDialog(Reward reward) {
 	        try {
@@ -138,6 +159,7 @@ public class MainApp extends Application
 	            Stage dialogStage = new Stage();
 	            dialogStage.setTitle("Edit Person");
 	            dialogStage.initModality(Modality.WINDOW_MODAL);
+	            dialogStage.initStyle(StageStyle.UTILITY);
 	            dialogStage.initOwner(primaryStage);
 	            Scene scene = new Scene(page);
 	            dialogStage.setScene(scene);
@@ -168,6 +190,7 @@ public class MainApp extends Application
 	            Stage dialogStage = new Stage();
 	            dialogStage.setTitle("Edit Person");
 	            dialogStage.initModality(Modality.WINDOW_MODAL);
+	            dialogStage.initStyle(StageStyle.DECORATED);
 	            dialogStage.initOwner(primaryStage);
 	            Scene scene = new Scene(page);
 	            dialogStage.setScene(scene);

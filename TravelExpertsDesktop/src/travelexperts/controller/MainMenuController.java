@@ -17,4 +17,10 @@ public class MainMenuController
 	{
 		mainApp.showCustomersView();
 	}
+	
+	@FXML
+	private void onAgentsClick(ActionEvent event)
+	{
+		mainApp.showAgentsView();
+	}
 }

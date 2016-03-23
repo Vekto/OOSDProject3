@@ -6,6 +6,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import travelexperts.util.ComboPair;
+
+
 
 
 public class Customer
@@ -129,9 +132,9 @@ public class Customer
 	 * @return HashMap<Integer,String>
 	 * @throws SQLException
 	 */
-	public static HashMap<Integer,String> getCustomerComboList() throws SQLException
+	public static ArrayList<ComboPair> getCustomerComboList() throws SQLException
 	{
-		HashMap<Integer,String> myCustCombo= null;
+		ArrayList<ComboPair> myCustCombo= null;
 		try
 		{
 			myCustCombo = DataBase.getComboList(TABLE,PRIMARYKEY,"CustFirstName");;

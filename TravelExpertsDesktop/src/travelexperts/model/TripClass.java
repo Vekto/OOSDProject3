@@ -1,11 +1,15 @@
 package travelexperts.model;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class TripClass
 {
 	private String ClassId;
 	private String ClassName;
+	
+	private static final String PRIMARYKEY = "ClassId";
+	private static final String TABLE = "classes";
 	/**
 	 * 
 	 */
@@ -29,7 +33,7 @@ public class TripClass
 
 	private String ClassDesc;
 	
-	private static final String TABLE = "classes";
+	
 	
 	public static ArrayList<TripClass> getAllClasses()
 	{
@@ -47,5 +51,27 @@ public class TripClass
 			e.printStackTrace();
 		}
 		return(myList);
+	}
+	
+	public static TripClass getTripClassById(String Id) throws SQLException
+	{
+		TripClass myClass= null;
+		try
+		{
+			myClass = (TripClass)DataBase.getById(TABLE,PRIMARYKEY,Id,TripClass.class);;
+		}
+		catch (IllegalArgumentException | SecurityException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return myClass;		
+	}
+	
+	@Override
+	public String toString()
+	{
+		String myString = this.ClassName;
+		return myString;
 	}
 }
