@@ -20,6 +20,7 @@ import travelexperts.model.Customer;
 import travelexperts.model.DataBase;
 import travelexperts.model.Reward;
 import travelexperts.model.TravelPackage;
+import travelexperts.util.ComboPair;
 import travelexperts.util.EncryptionUtil;
 
 public class MainApp extends Application
@@ -199,6 +200,37 @@ public class MainApp extends Application
 	            BookingDetailsDialogController controller = loader.getController();
 	            controller.setDialogStage(dialogStage);
 	            controller.setBookingDetail(detail);
+
+	            // Show the dialog and wait until the user closes it
+	            dialogStage.showAndWait();
+
+	            return controller.isOkClicked();
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	            return false;
+	        }
+	    }
+	    
+	    public boolean showTransferCustomerDialog(ComboPair myPair) {
+	        try {
+	            // Load the fxml file and create a new stage for the popup dialog.
+	            FXMLLoader loader = new FXMLLoader();
+	            loader.setLocation(MainApp.class.getResource("../view/TransferCustomerDialog.fxml"));
+	            AnchorPane page = (AnchorPane) loader.load();
+
+	            // Create the dialog Stage.
+	            Stage dialogStage = new Stage();
+	            dialogStage.setTitle("Select New Agent");
+	            dialogStage.initModality(Modality.WINDOW_MODAL);
+	            dialogStage.initStyle(StageStyle.UTILITY);
+	            dialogStage.initOwner(primaryStage);
+	            Scene scene = new Scene(page);
+	            dialogStage.setScene(scene);
+
+	            // Set the person into the controller.
+	            TransferCustomerDialogController controller = loader.getController();
+	            controller.setDialogStage(dialogStage);
+	            controller.setAgent(myPair);
 
 	            // Show the dialog and wait until the user closes it
 	            dialogStage.showAndWait();

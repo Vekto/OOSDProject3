@@ -33,9 +33,11 @@
     -fx-base: #61a2b1;
     -fx-control-inner-background: derive(#61a2b1,80%);
     -fx-background-color: white;
-    -fx-table-cell-border-color: black; 
-    -fx-table-header-border-color: black;
+    -fx-table-cell-border-color: #2A5058;
+    -fx-table-header-border-color: #2A5058;
     -fx-padding: 5;
+    -fx-border-width:1px;
+    -fx-border-color:#2A5058;
 }
 
 .table-view .column-header-background {
@@ -51,19 +53,20 @@
         transparent
         derive(-fx-base, 80%) 
         transparent;
-    -fx-border-insets: 0 10 1 0;
+    -fx-border-insets: 0 5 1 0;
 }
 
 .table-view .column-header .label {
     -fx-font-size: 12pt;
-    -fx-font-family: "Segoe UI Light";
+    -fx-font-family: "Segoe UI semibold";
     -fx-text-fill: black;
     -fx-alignment: center-left;
-    -fx-opacity: 1;
+    -fx-opacity: .6;
 }
 
 .table-view:focused .table-row-cell:filled:focused:selected {
-    -fx-background-color: -fx-focus-color;
+   /*-fx-background-color: -fx-focus-color;*/
+   -fx-background-color: #61a2b1;
 }
 
 .split-pane:horizontal > .split-pane-divider {

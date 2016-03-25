@@ -147,6 +147,30 @@ public class Customer
 		return myCustCombo;
 	}
 	
+	public static ArrayList<Customer> getAllAgentCustomers(int Id)
+	{
+		//DataBase.getMultiById(TABLE, "CustomerId" , Id, Booking.class);
+		ArrayList<Customer> myList = new ArrayList<Customer>();
+			for (Object object : DataBase.getMultiById(TABLE, "AgentId" , Id, Customer.class))
+			{
+				myList.add((Customer)object);
+			}
+		return myList;
+		
+	}
+	public static int updateCustomer(Customer newCustomer, Customer oldCustomer) 
+	{
+		int count = 0;
+		
+		
+		
+			count = DataBase.updateEntity(TABLE, UPDATE_COLUMNS, PRIMARYKEY, newCustomer.getCustomerId(), newCustomer, oldCustomer);
+		
+		
+		
+		return count;
+	}
+	
 	public static int insertCustomer(Customer myCustomer) 
 	{
 		int count = 0;

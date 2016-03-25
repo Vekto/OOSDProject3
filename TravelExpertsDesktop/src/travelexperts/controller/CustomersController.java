@@ -23,11 +23,13 @@ import javafx.util.Pair;
 import travelexperts.util.ComboPair;
 import travelexperts.constants.CardTypes;
 import travelexperts.constants.Province;
+import travelexperts.model.Agency;
 import travelexperts.model.Agent;
 import travelexperts.model.Booking;
 import travelexperts.model.BookingDetail;
 import travelexperts.model.CreditCard;
 import travelexperts.model.Customer;
+import travelexperts.model.DataBase;
 import travelexperts.model.Reward;
 
 
@@ -113,6 +115,7 @@ public class CustomersController
 		for (ComboPair pair : Agent.getAgentComboList())
 		{
 			agentComboBox.getItems().addAll(pair);
+			
 		}
 		}
 		catch (SQLException e)
@@ -250,8 +253,19 @@ public class CustomersController
 		if(bookingData !=null){bookingData.clear();}
 		bookingData = FXCollections.observableArrayList(Booking.getAllCustBookings(cust.getCustomerId()));
 		BookingTable.setItems(bookingData);
-		agentComboBox.getSelectionModel().select(cust.getAgentId());
+		ComboPair agentPair = null;
+		try
+		{
+			agentPair = new ComboPair(cust.getAgentId(),(Agent.getAgentById(cust.getAgentId()).getAgtFirstName()));
+		}
+		catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		agentComboBox.getSelectionModel().select(agentPair);
 		
 	}
+	
 	
 }

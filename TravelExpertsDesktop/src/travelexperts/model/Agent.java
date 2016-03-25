@@ -1,6 +1,9 @@
 package travelexperts.model;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -19,6 +22,7 @@ public class Agent
 	private String AgtPosition;
 	private int AgentId;
 	private String AgtFirstName;
+	private boolean Active;
 	private static final String[] UPDATE_COLUMNS = 
 			{ 
 				"AgtBusPhone",
@@ -28,7 +32,8 @@ public class Agent
 		    	"AgtMiddleInitial", 
 		    	"AgtPosition", 
 		    	"AgentId",
-		    	"AgtFirstName"
+		    	"AgtFirstName",
+		    	"Active"
 		    };
 	
 	private final static String TABLE = "Agents";
@@ -48,9 +53,10 @@ public class Agent
 	 * @param agtLastName
 	 * @param agtFirstName
 	 * @param agentId
+	 * @param active
 	 */
 	public Agent(int agencyId, String agtPosition, String agtEmail, String agtBusPhone, String agtMiddleInitial,
-	        String agtLastName, String agtFirstName, int agentId)
+	        String agtLastName, String agtFirstName, int agentId, boolean active)
 	{
 		super();
 		this.AgencyId = agencyId;
@@ -61,6 +67,7 @@ public class Agent
 		this.AgtLastName = agtLastName;
 		this.AgtFirstName = agtFirstName;
 		this.AgentId = agentId;
+		this.Active = active;
 	}
 	
 	//Methods
@@ -128,6 +135,35 @@ public class Agent
 			e.printStackTrace();
 		}
 		return myAgentCombo;	
+	}
+	
+	public static ArrayList<ComboPair> getActiveAgentComboList()
+	{
+		try
+		{
+			Connection conn = DataBase.getConnection();
+			Statement statement = conn.createStatement();
+			ResultSet rs;
+			rs = statement.executeQuery("select AgentId ,AgtFirstName from agents where Active=1");
+			ArrayList<ComboPair> myList = new ArrayList<ComboPair>();
+			
+			while (rs.next())
+			{
+				ComboPair myComboPair = new ComboPair(rs.getInt(1), rs.getString(2));
+				myList.add(myComboPair);
+			}
+			
+			rs.close();
+			statement.close();
+			conn.close();
+			return myList;
+		}
+		catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public static int updateAgent(Agent myAgent, Agent myOldAgent) 
@@ -231,4 +267,15 @@ public class Agent
 	{
 		this.AgentId = agentId;
 	}
+
+	public boolean isActive()
+	{
+		return Active;
+	}
+
+	public void setActive(boolean active)
+	{
+		Active = active;
+	}
+	
 }

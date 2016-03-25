@@ -228,6 +228,7 @@ public class DataBase
 					
 	}
 	
+	
 	public static int insertEntity(String table,String[] myColumns, String idField,int idValue, Object myNewEntity)  
 	{
 		int updateCount = 0;
