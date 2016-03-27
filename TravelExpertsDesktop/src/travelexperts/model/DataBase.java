@@ -259,7 +259,7 @@ public class DataBase
 
 			PreparedStatement statement;
 			i=1;
-			statement = conn.prepareStatement(myQuery);
+			statement = conn.prepareStatement(myQuery,Statement.RETURN_GENERATED_KEYS);
 			for (String column : myColumns)
 			{
 				Field field = myNewEntity.getClass().getDeclaredField(column);
@@ -269,7 +269,10 @@ public class DataBase
 				System.out.println(statement.toString());
 				i++;
 			}
-			updateCount = statement.executeUpdate();
+			statement.executeUpdate();
+			ResultSet recordId = statement.getGeneratedKeys();
+			recordId.next();
+			updateCount=recordId.getInt(1);
 			System.out.println(statement.toString());
 		}
 		catch (SQLException | IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e)

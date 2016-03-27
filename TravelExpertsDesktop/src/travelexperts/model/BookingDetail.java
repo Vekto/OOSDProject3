@@ -124,6 +124,19 @@ public static BookingDetail getDetailByBookingId(String Id) throws SQLException
 	return myDetail;		
 }
 
+public static int updateBookingDetail(BookingDetail newDetail, BookingDetail oldDetail) 
+{
+	int count = 0;
+	
+	
+	
+		count = DataBase.updateEntity(TABLE, UPDATE_COLUMNS, PRIMARYKEY, oldDetail.BookingDetailId, newDetail, oldDetail);
+	
+	
+	
+	return count;
+}
+
 public Integer getBookingDetailId()
 {
 	return BookingDetailId;

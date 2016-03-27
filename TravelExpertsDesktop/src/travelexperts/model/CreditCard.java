@@ -47,12 +47,12 @@ public class CreditCard
 		return myList;		
 	}
 	
-	public static void insertCreditCard(CreditCard newCard)
+	public static int insertCreditCard(CreditCard newCard)
 	{
-		DataBase.insertEntity(TABLE, UPDATE_COLUMNS, PRIMARYKEY,newCard.CreditCardId,newCard);
+		return(DataBase.insertEntity(TABLE, UPDATE_COLUMNS, PRIMARYKEY,0,newCard));
 	}
 	
-	public static void deleteReward(CreditCard card)
+	public static void deleteCard(CreditCard card)
 	{
 		if(DataBase.concurrencyCheck(card, TABLE, UPDATE_COLUMNS, "CreditCardId", card.getCreditCardId()))
 		{
@@ -60,6 +60,21 @@ public class CreditCard
 		}
 	}
 	
+	public CreditCard(){}
+	/**
+	 * @param cCName
+	 * @param cCNumber
+	 * @param cCExpiry
+	 * @param customerId
+	 */
+	public CreditCard(String cCName, String cCNumber, Date cCExpiry, Integer customerId)
+	{
+		super();
+		CCName = cCName;
+		CCNumber = cCNumber;
+		CCExpiry = cCExpiry;
+		CustomerId = customerId;
+	}
 	
 	@Override
 	public String toString()

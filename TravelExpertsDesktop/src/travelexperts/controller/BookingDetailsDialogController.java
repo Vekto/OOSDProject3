@@ -1,11 +1,12 @@
 package travelexperts.controller;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-
+import java.util.Date;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,7 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import travelexperts.model.BookingDetail;
-
+import travelexperts.model.Customer;
 import travelexperts.model.Fee;
 import travelexperts.model.Region;
 
@@ -171,4 +172,40 @@ public class BookingDetailsDialogController
         }*/
         return true;
     }
+    
+	@FXML
+	private void saveDetails()
+	{
+		BookingDetail updatedDetail = new BookingDetail();
+		
+/*		startDate
+		endDate
+		itNumberField
+		descriptionField
+		destinationField
+		prodSupField
+		basePriceField
+		commissionField*/
+		
+		updatedDetail.setFeeId(feeCombo.getSelectionModel().getSelectedItem().getFeeId());
+		updatedDetail.setRegionId(regionCombo.getSelectionModel().getSelectedItem().getRegionId());
+		updatedDetail.setClassId(classCombo.getSelectionModel().getSelectedItem().getClassId());
+		updatedDetail.setTripStart(Date.from(startDate.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+		updatedDetail.setTripEnd(Date.from(endDate.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+		updatedDetail.setItineraryNo(Double.parseDouble(itNumberField.getText()));
+		updatedDetail.setDescription(descriptionField.getText());
+		updatedDetail.setDestination(destinationField.getText());
+		updatedDetail.setProductSupplierId(Integer.parseInt(prodSupField.getText()));
+		updatedDetail.setBasePrice(BigDecimal.valueOf(Double.parseDouble(basePriceField.getText())));
+		updatedDetail.setAgencyCommission(BigDecimal.valueOf(Double.parseDouble(commissionField.getText())));
+		updatedDetail.setBookingId(oldDetail.getBookingId());
+		updatedDetail.setBookingDetailId(oldDetail.getBookingDetailId());
+
+		System.out.println(updatedDetail);
+		if(BookingDetail.updateBookingDetail(updatedDetail, oldDetail) != 0)
+		{
+			oldDetail=updatedDetail;
+			handleOk();
+		}
+	}
 }
