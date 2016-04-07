@@ -1,12 +1,17 @@
 package travelexperts.model;
 
+import java.lang.reflect.Field;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
+
+import javafx.util.Pair;
 import travelexperts.util.ComboPair;
 
 
@@ -78,7 +83,7 @@ public class Agent
 	 * @return -ArrayList<Agent>
 	 * @throws SQLException
 	 */
-	public static ArrayList<Agent> getAgents() throws SQLException
+	public static ArrayList<Agent> getAgents()
 	{
 			ArrayList<Agent> myList = new ArrayList<Agent>();
 			try
@@ -102,7 +107,7 @@ public class Agent
 	 * @return Agent
 	 * @throws SQLException
 	 */
-	public static Agent getAgentById(int Id) throws SQLException
+	public static Agent getAgentById(int Id)
 	{
 		Agent myAgent = null;
 		try
@@ -117,12 +122,30 @@ public class Agent
 		return myAgent;	
 	}
 	
+	public static ArrayList<Agent> getAgentsByAgency(int id)
+	{
+			ArrayList<Agent> myList = new ArrayList<Agent>();
+			try
+			{
+				for (Object object : DataBase.getMultiById(TABLE, "AgencyId", id, Agent.class))
+				{
+					myList.add((Agent)object);
+				}
+			}
+			catch (IllegalArgumentException | SecurityException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		return myList;		
+	}
+	
 	/**
 	 * Retrieves Agent id's and FirstNames for display in a DropDown or ComboBox
 	 * @return HashMap<Integer,String>
 	 * @throws SQLException
 	 */
-	public static ArrayList<ComboPair> getAgentComboList() throws SQLException
+	public static ArrayList<ComboPair> getAgentComboList()
 	{
 		ArrayList<ComboPair> myAgentCombo= null;
 		try
@@ -189,6 +212,63 @@ public class Agent
 		
 		
 		return count;
+	}
+	
+	public static Boolean DropAgent(Agent myAgent) 
+	{
+		Boolean success = false;
+		
+		
+		
+			success = DataBase.deleteById(TABLE,PRIMARYKEY, myAgent.AgentId, myAgent);
+		
+		
+		return success;
+	}
+	
+	public static void custBackup(Pair myPair)
+	{
+		Connection conn = DataBase.getConnection();
+		String sqlString = "INSERT INTO custagentbackup (AgentId,CustId) values(?,?)";
+		
+		PreparedStatement statement;
+		
+		try
+		{
+			statement = conn.prepareStatement(sqlString);
+			statement.setInt(1, Integer.parseInt(myPair.getKey().toString()));
+			statement.setInt(2, Integer.parseInt(myPair.getValue().toString()));
+			statement.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public static ArrayList<Integer> getOldCusts(int AgentId)
+	{
+		Connection conn = DataBase.getConnection();
+	
+	    Statement stmt = null;
+	    ArrayList<Integer> myCusts = new ArrayList<Integer>();
+	    String query = "select CustId from custagentbackup where agentId = " + AgentId;
+	    try {
+	        stmt = conn.createStatement();
+	        ResultSet rs = stmt.executeQuery(query);
+	        while (rs.next()) 
+	        {
+	            int custId = rs.getInt("'CustId");  
+	            myCusts.add(custId);
+	        }
+	    }
+	    catch (SQLException e) 
+	    {
+				e.printStackTrace();
+		}
+	    return myCusts;
 	}
 	
 	//Overrides

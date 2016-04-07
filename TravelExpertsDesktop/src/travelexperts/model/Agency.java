@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
+import com.sun.glass.ui.TouchInputSupport;
 
 import travelexperts.util.ComboPair;
 
@@ -69,7 +69,7 @@ public class Agency
 	 * @return -ArrayList<Agency>
 	 * @throws SQLException
 	 */
-	public static ArrayList<Agency> getAgencies() throws SQLException
+	public static ArrayList<Agency> getAgencies() 
 	{
 			ArrayList<Agency> myList = new ArrayList<Agency>();
 			try
@@ -93,7 +93,7 @@ public class Agency
 	 * @return Agency
 	 * @throws SQLException
 	 */
-	public static Agency getAgencyById(int Id) throws SQLException
+	public static Agency getAgencyById(int Id) 
 	{
 		Agency myAgency = null;
 		try
@@ -112,7 +112,7 @@ public class Agency
 	 * @return HashMap<Integer,String>
 	 * @throws SQLException
 	 */
-	public static ArrayList<ComboPair> getAgencyComboList() throws SQLException
+	public static ArrayList<ComboPair> getAgencyComboList() 
 	{
 		ArrayList<ComboPair> myAgencyCombo= null;
 		try
@@ -158,14 +158,8 @@ public class Agency
 	@Override
 	public String toString()
 	{
-		String returnString = "AgencyId: " + this.AgencyId
-				+ ", Address: " + this.AgncyAddress
-				+ ", City: " + this.AgncyCity
-				+ ", Province: " + this.AgncyProv
-				+ ", Country: " + this.AgncyCountry
-				+ ", Postal: " + this.AgncyPostal
-				+ ", Phone: " + this.AgncyPhone
-				+ ", Fax: " + this.AgncyFax;
+		String returnString = this.AgencyId
+				+ "-" + this.AgncyAddress;
 		return returnString;
 	}
 	//Getters and Setters

@@ -88,7 +88,7 @@ public class Customer
 	 * @return -ArrayList<Customer>
 	 * @throws SQLException
 	 */
-	public static ArrayList<Customer> getCustomers() throws SQLException
+	public static ArrayList<Customer> getCustomers()
 	{		
 			ArrayList<Customer> myList = new ArrayList<Customer>();
 			try
@@ -112,7 +112,7 @@ public class Customer
 	 * @return Customer
 	 * @throws SQLException
 	 */
-	public static Customer getCustomerById(int Id) throws SQLException
+	public static Customer getCustomerById(int Id)
 	{
 		Customer myCustomer= null;
 		try
@@ -132,7 +132,7 @@ public class Customer
 	 * @return HashMap<Integer,String>
 	 * @throws SQLException
 	 */
-	public static ArrayList<ComboPair> getCustomerComboList() throws SQLException
+	public static ArrayList<ComboPair> getCustomerComboList()
 	{
 		ArrayList<ComboPair> myCustCombo= null;
 		try

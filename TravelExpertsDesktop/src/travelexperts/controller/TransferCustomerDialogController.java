@@ -2,13 +2,16 @@ package travelexperts.controller;
 
 import java.util.ArrayList;
 
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import travelexperts.model.Agent;
+import travelexperts.model.Customer;
 import travelexperts.model.DataBase;
 import travelexperts.model.Reward;
 import travelexperts.util.ComboPair;
@@ -17,7 +20,9 @@ public class TransferCustomerDialogController
 {
 	@FXML
 	private ComboBox<ComboPair> agentCombo;
-
+	@FXML
+	private Label CustomerLabel;
+	private AgentsController agentsController;
     private Stage dialogStage;
     private ComboPair myPair;
     private boolean okClicked = false;
@@ -50,11 +55,21 @@ public class TransferCustomerDialogController
      */
     public void setAgent(ComboPair myPair) {
     	this.myPair = myPair;
-        this.agentCombo.setValue(myPair);
+        //this.agentCombo.getSelectionModel().select(myPair);
         //ComboHash<Integer,String> currentReward = new ComboHash<Integer,String>(reward.getRewardId(),reward.ge)
        //typeCombo.getSelectionModel().select(););;
 
     }
+    
+    public void setCustomer(Customer customer)
+    		{
+    			CustomerLabel.setText("Select a new agent for " + customer.getCustFirstName() + " " + customer.getCustLastName());
+    		}
+    public void setAgentController(AgentsController agentsController)
+    {
+    	this.agentsController = agentsController;
+    }
+    		
 
     /**
      * Returns true if the user clicked OK, false otherwise.
@@ -72,9 +87,12 @@ public class TransferCustomerDialogController
     @FXML
     private void handleOk() {
         if (isInputValid()) {
-        	myPair = agentCombo.getSelectionModel().getSelectedItem();
-        	System.out.println(agentCombo.getSelectionModel().getSelectedItem());
-        	System.out.println(myPair);
+        	ComboPair newPair = agentCombo.getSelectionModel().getSelectedItem();
+        	System.out.println(newPair);
+
+        	agentsController.setTransferAgent(newPair);
+        	System.out.println(agentCombo.getSelectionModel().getSelectedItem() + "bobby");
+        	
             okClicked = true;
             dialogStage.close();
         }

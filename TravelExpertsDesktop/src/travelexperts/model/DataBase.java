@@ -216,7 +216,7 @@ public class DataBase
 				i++;
 			}
 			updateCount = statement.executeUpdate();
-			System.out.println(statement.toString());
+
 		}
 		catch (SQLException | IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e)
 		{
@@ -264,9 +264,7 @@ public class DataBase
 			{
 				Field field = myNewEntity.getClass().getDeclaredField(column);
 				field.setAccessible(true);
-				System.out.println();
 				statement.setObject(i, field.get(myNewEntity));
-				System.out.println(statement.toString());
 				i++;
 			}
 			statement.executeUpdate();
@@ -293,7 +291,7 @@ public class DataBase
 		Connection conn = getConnection();
 		Statement statement = conn.createStatement();
 		String sql = "DELETE FROM " + table + " WHERE " + idField + "='" + idValue + "'";
-		System.out.println(sql);
+
 		success = statement.execute(sql);	
 		}
 		catch(SQLException e)
@@ -364,7 +362,7 @@ public class DataBase
 		try
 		{
 		 objectInstance = entity.newInstance();
-
+		 
 
 		for(Map.Entry<String, Object> row : myHash.entrySet())
 		{
@@ -394,7 +392,6 @@ public class DataBase
         EncryptionUtil.setKey(strPssword);
         EncryptionUtil.encrypt(pass.trim());
         String encryptedPass = EncryptionUtil.getEncryptedString();
-        
 		String sqlString = "select AgentId from Agents where AgentId = " + user + " && password = " + encryptedPass;
 		//verified = statement.execute(sqlString);
 		//return verified;

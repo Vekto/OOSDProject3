@@ -64,5 +64,16 @@ public class RootLayoutController
 			alert.show();
 		}
 	}
+	
+	@FXML
+	private void showCustomersView()
+	{
+		mainApp.showCustomersView();
+	}
+	@FXML
+	private void showAgentsView()
+	{
+		mainApp.showAgentsView();
+	}
 }
 

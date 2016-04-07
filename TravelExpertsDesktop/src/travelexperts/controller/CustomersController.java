@@ -111,20 +111,14 @@ public class CustomersController
 		provComboBox.getItems().setAll(Province.values());
 		cardTypeCombo.getItems().setAll(CardTypes.values());
 		cardTypeCombo.getSelectionModel().select(0);
-		try
-		{	
+
 
 		for (ComboPair pair : Agent.getAgentComboList())
 		{
 			agentComboBox.getItems().addAll(pair);
 			
 		}
-		}
-		catch (SQLException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
         BookingIdCol.setCellValueFactory(new PropertyValueFactory<Booking,Integer>("BookingId"));
         BookingDateCol.setCellValueFactory(new PropertyValueFactory<Booking,Date>("BookingDate"));
         BookingNoCol.setCellValueFactory(new PropertyValueFactory<Booking,String>("BookingNo"));
@@ -311,15 +305,7 @@ public class CustomersController
 		bookingData = FXCollections.observableArrayList(Booking.getAllCustBookings(cust.getCustomerId()));
 		BookingTable.setItems(bookingData);
 		ComboPair agentPair = null;
-		try
-		{
-			agentPair = new ComboPair(cust.getAgentId(),(Agent.getAgentById(cust.getAgentId()).getAgtFirstName()));
-		}
-		catch (SQLException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		agentPair = new ComboPair(cust.getAgentId(),(Agent.getAgentById(cust.getAgentId()).getAgtFirstName()));
 		agentComboBox.getSelectionModel().select(agentPair);
 		
 	}

@@ -7,16 +7,16 @@
 <?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="187.0" prefWidth="305.0" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="travelexperts.controller.TransferCustomerDialogController">
+<AnchorPane prefHeight="250.0" prefWidth="305.0" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="travelexperts.controller.TransferCustomerDialogController">
    <children>
-      <Label layoutX="68.0" layoutY="20.0" styleClass="label-Large" text="Select New Agent" />
-      <ComboBox fx:id="agentCombo" layoutX="131.0" layoutY="75.0" prefWidth="150.0" styleClass="text-field">
+      <Label fx:id="CustomerLabel" alignment="CENTER" layoutX="28.0" layoutY="21.0" maxWidth="250.0" prefWidth="250.0" styleClass="label-Large" text="Select New Agent" textAlignment="CENTER" wrapText="true" />
+      <ComboBox fx:id="agentCombo" layoutX="128.0" layoutY="132.0" prefWidth="150.0" styleClass="text-field">
          <effect>
             <DropShadow />
          </effect></ComboBox>
-      <Label layoutX="25.0" layoutY="81.0" text="New Agent:" />
-      <Button focusTraversable="false" layoutX="68.0" layoutY="140.0" mnemonicParsing="false" onAction="#handleOk" prefHeight="27.0" prefWidth="70.0" text="Save" />
-      <Button cancelButton="true" focusTraversable="false" layoutX="183.0" layoutY="140.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
+      <Label layoutX="29.0" layoutY="138.0" text="New Agent:" />
+      <Button focusTraversable="false" layoutX="75.0" layoutY="195.0" mnemonicParsing="false" onAction="#handleOk" prefHeight="27.0" prefWidth="70.0" text="Save" />
+      <Button cancelButton="true" focusTraversable="false" layoutX="183.0" layoutY="195.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
    </children>
    <effect>
       <InnerShadow choke="0.75" color="#61a2b1" height="50.0" radius="24.5" width="50.0" />

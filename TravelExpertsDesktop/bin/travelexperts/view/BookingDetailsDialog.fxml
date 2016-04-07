@@ -35,8 +35,8 @@
       <ComboBox fx:id="feeCombo" layoutX="340.0" layoutY="304.0" prefHeight="37.0" prefWidth="136.0" styleClass="text-field" />
       <TextField fx:id="basePriceField" layoutX="115.0" layoutY="302.0" prefHeight="37.0" prefWidth="150.0" />
       <TextField fx:id="commissionField" layoutX="115.0" layoutY="350.0" prefHeight="37.0" prefWidth="150.0" />
-      <Button focusTraversable="false" layoutX="125.0" layoutY="398.0" mnemonicParsing="false" onAction="#saveDetails" text="Save" />
-      <Button cancelButton="true" focusTraversable="false" layoutX="271.0" layoutY="396.0" mnemonicParsing="false" text="Cancel" />
+      <Button focusTraversable="false" layoutX="182.0" layoutY="396.0" mnemonicParsing="false" onAction="#saveDetails" prefHeight="27.0" prefWidth="61.0" text="Save" />
+      <Button cancelButton="true" focusTraversable="false" layoutX="271.0" layoutY="396.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
    </children>
    <effect>
       <InnerShadow choke="0.72" color="#61a2b1" height="50.0" radius="24.5" width="50.0" />

@@ -31,6 +31,12 @@
               <MenuItem mnemonicParsing="false" text="About" />
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Navigation">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#showCustomersView" text="Customers" />
+                  <MenuItem mnemonicParsing="false" onAction="#showAgentsView" text="Agents" />
+              </items>
+            </Menu>
         </menus>
       </MenuBar>
    </top>
@@ -65,7 +71,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <Button fx:id="btnLogIn" layoutX="251.0" layoutY="287.0" mnemonicParsing="false" onAction="#handleLogInClick" prefHeight="31.0" prefWidth="99.0" text="Log In">
+            <Button fx:id="btnLogIn" focusTraversable="false" layoutX="251.0" layoutY="287.0" mnemonicParsing="false" onAction="#handleLogInClick" prefHeight="31.0" prefWidth="99.0" text="Log In">
                <effect>
                   <InnerShadow />
                </effect>

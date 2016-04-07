@@ -211,7 +211,7 @@ public class MainApp extends Application
 	        }
 	    }
 	    
-	    public boolean showTransferCustomerDialog(ComboPair myPair) {
+	    public boolean showTransferCustomerDialog(ComboPair myPair, Customer customer,AgentsController agentsController) {
 	        try {
 	            // Load the fxml file and create a new stage for the popup dialog.
 	            FXMLLoader loader = new FXMLLoader();
@@ -231,6 +231,8 @@ public class MainApp extends Application
 	            TransferCustomerDialogController controller = loader.getController();
 	            controller.setDialogStage(dialogStage);
 	            controller.setAgent(myPair);
+	            controller.setCustomer(customer);
+	            controller.setAgentController(agentsController);
 
 	            // Show the dialog and wait until the user closes it
 	            dialogStage.showAndWait();

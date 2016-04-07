@@ -15,7 +15,7 @@ public class ComboPair extends Pair<Object,Object>
 	public String toString()
 	{
 		
-;
+
 		String myString = this.getValue().toString();
 		return myString;
 	}
