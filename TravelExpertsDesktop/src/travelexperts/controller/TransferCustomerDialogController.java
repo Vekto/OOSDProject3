@@ -34,9 +34,8 @@ public class TransferCustomerDialogController
      */
     @FXML
     private void initialize() {
-    	//typeHash = DataBase.getComboList("Rewards","RewardId", "RwdName");
-    	agentList = FXCollections.observableArrayList(Agent.getActiveAgentComboList());
-    	agentCombo.getItems().addAll(agentList);
+    	
+    	
     }
 
     /**
@@ -55,9 +54,9 @@ public class TransferCustomerDialogController
      */
     public void setAgent(ComboPair myPair) {
     	this.myPair = myPair;
-        //this.agentCombo.getSelectionModel().select(myPair);
-        //ComboHash<Integer,String> currentReward = new ComboHash<Integer,String>(reward.getRewardId(),reward.ge)
-       //typeCombo.getSelectionModel().select(););;
+    	agentList = FXCollections.observableArrayList(Agent.getActiveAgentComboList());
+    	agentList.remove(myPair);
+    	agentCombo.getItems().addAll(agentList);
 
     }
     
@@ -88,11 +87,7 @@ public class TransferCustomerDialogController
     private void handleOk() {
         if (isInputValid()) {
         	ComboPair newPair = agentCombo.getSelectionModel().getSelectedItem();
-        	System.out.println(newPair);
-
-        	agentsController.setTransferAgent(newPair);
-        	System.out.println(agentCombo.getSelectionModel().getSelectedItem() + "bobby");
-        	
+        	agentsController.setTransferAgent(newPair);        	
             okClicked = true;
             dialogStage.close();
         }

@@ -2,6 +2,7 @@ package travelexperts.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javafx.application.Application;
@@ -13,6 +14,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Pair;
 import travelexperts.model.Agency;
 import travelexperts.model.Agent;
 import travelexperts.model.BookingDetail;
@@ -177,6 +179,33 @@ public class MainApp extends Application
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	            return false;
+	        }
+	    }
+	    public void showReturnCustsDialog(ArrayList<Integer> myCusts,Agent myAgent) {
+	        try {
+	            // Load the fxml file and create a new stage for the popup dialog.
+	            FXMLLoader loader = new FXMLLoader();
+	            loader.setLocation(MainApp.class.getResource("../view/ReturnCustsDialog.fxml"));
+	            AnchorPane page = (AnchorPane) loader.load();
+
+	            // Create the dialog Stage.
+	            Stage dialogStage = new Stage();
+	            dialogStage.setTitle("Returning Custs");
+	            dialogStage.initModality(Modality.WINDOW_MODAL);
+	            dialogStage.initStyle(StageStyle.UTILITY);
+	            dialogStage.initOwner(primaryStage);
+	            Scene scene = new Scene(page);
+	            dialogStage.setScene(scene);
+
+	            // Set the person into the controller.
+	            ReturnCustsDialogController controller = loader.getController();
+	            controller.setDialogStage(dialogStage);
+	            controller.SetLists(myCusts,myAgent);
+
+	            // Show the dialog and wait until the user closes it
+	            dialogStage.showAndWait();
+	        } catch (IOException e) {
+	            e.printStackTrace();
 	        }
 	    }
 	    

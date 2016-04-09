@@ -9,6 +9,7 @@ import java.util.Optional;
 
 import com.sun.media.jfxmedia.events.NewFrameEvent;
 import com.sun.org.apache.bcel.internal.generic.IfInstruction;
+import com.sun.org.apache.xalan.internal.xsltc.compiler.Template;
 import com.sun.org.apache.xpath.internal.operations.And;
 import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
@@ -318,7 +319,6 @@ public class AgentsController
         if (okClicked) {
         	Customer newCustomer = new Customer();
         	newCustomer = customersTable.getSelectionModel().getSelectedItem();
-        	System.out.println(transferAgent);
         	newCustomer.setAgentId((int)transferAgent.getKey());
 
         	Customer.updateCustomer(newCustomer, oldCustomer);
@@ -394,16 +394,7 @@ public class AgentsController
 	{
 		if (isAgentCheck.selectedProperty().getValue())
 		{
-			Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
-			        "Are you sure you wish to make this employee an Agent?");
-			alert.setHeaderText("Confirmation");
-			alert.setTitle("Make Agent");
-			alert.initStyle(StageStyle.UTILITY);
-			DialogPane dialogPane = alert.getDialogPane();
-
-			dialogPane.getStylesheets().add(myTabPane.getParent().getStylesheets().get(0));
-			dialogPane.getStyleClass().add("myDialog");
-			Optional<ButtonType> result = alert.showAndWait();
+			Optional<ButtonType> result = displayAlert("Are you sure you wish to make this employee an Agent?", "Confirmation", "Make Agent");
 
 			if (result.isPresent() && result.get() == ButtonType.CANCEL)
 			{
@@ -412,15 +403,7 @@ public class AgentsController
 		}
 		else
 		{
-			Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "The agent will be made inactive. The employee will need to be re-made an agent before re-activating their agent status...would you like to continue?");
-			alert.setHeaderText("Confirmation");
-			alert.setTitle("Remove Agent");
-			alert.initStyle(StageStyle.UTILITY);
-			DialogPane dialogPane = alert.getDialogPane();
-			dialogPane.setPrefWidth(500);
-			dialogPane.getStylesheets().add(myTabPane.getParent().getStylesheets().get(0));
-			dialogPane.getStyleClass().add("myDialog");
-			Optional<ButtonType> result = alert.showAndWait();
+			Optional<ButtonType> result = displayAlert("The agent will be made inactive. The employee will need to be re-made an agent before re-activating their agent status...would you like to continue?","Confirmation","Remove Agent");
 			if (result.isPresent() && result.get() == ButtonType.CANCEL)
 			{
 				isAgentCheck.setSelected(true);
@@ -433,15 +416,7 @@ public class AgentsController
 	@FXML
 	private void agtSaveClick(ActionEvent event)
 	{
-		Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you wish to save your changes?");
-		alert.setHeaderText("Confirmation");
-		alert.setTitle("Save Agent");
-		alert.initStyle(StageStyle.UTILITY);
-		DialogPane dialogPane = alert.getDialogPane();
-
-		dialogPane.getStylesheets().add(myTabPane.getParent().getStylesheets().get(0));
-		dialogPane.getStyleClass().add("myDialog");
-		Optional<ButtonType> result = alert.showAndWait();
+		Optional<ButtonType> result = displayAlert("Are you sure you wish to save your changes?","Confirmation","Save Agent/Employee");
 
 		if (result.isPresent() && result.get() == ButtonType.OK)
 		{
@@ -453,19 +428,10 @@ public class AgentsController
 			updatedEmployee.setEmpBusPhone(agtBusPhoneField.getText());
 			updatedEmployee.setEmpEmail(agtEmailField.getText());
 
-			Agent updatedAgent = new Agent();
-			updatedAgent.setAgtFirstName(agtFirstNameField.getText());
-			updatedAgent.setAgtLastName(agtLastNameField.getText());
-			updatedAgent.setAgtMiddleInitial(agtMiddleInitialField.getText());
-			updatedAgent.setAgtBusPhone(agtBusPhoneField.getText());
-			updatedAgent.setAgtEmail(agtEmailField.getText());
-			updatedAgent.setAgtPosition(agtPositionField.getText());
-			updatedAgent.setAgencyId(agencyCombo.getSelectionModel().getSelectedItem().getAgencyId());
-			updatedAgent.setAgentId(currentAgent.getAgentId());
-			updatedAgent.setActive(activeCheck.isSelected());
+			Agent updatedAgent = createUpdatedAgent();
 			if (currentAgent.isActive() && updatedAgent.isActive() == false)
 			{
-				ArrayList<Pair<Integer, Integer>> custstobackup = transferCusts(updatedAgent.getAgentId());
+				ArrayList<Pair<Integer, Integer>> custstobackup = transferCusts(updatedAgent);
 				if (custstobackup != null)
 				{
 					for (Pair<Integer, Integer> myPair : custstobackup)
@@ -478,6 +444,8 @@ public class AgentsController
 			if (updatedAgent.isActive())
 			{
 				updatedEmployee.setAgent(true);
+				
+				mainApp.showReturnCustsDialog(Agent.getOldCusts(updatedAgent.getAgentId()),updatedAgent);
 			}
 			if (currentAgent.getAgentId() == updatedAgent.getAgentId())
 			{
@@ -486,60 +454,27 @@ public class AgentsController
 			}
 			Agent.updateAgent(updatedAgent, currentAgent);
 			Employee.updateEmployee(updatedEmployee, currentEmployee);
-			employeeData.clear();
-			employeeData = FXCollections.observableArrayList(Employee.getEmployees());
+			employeeData = FXCollections.observableArrayList(Employee.getEmployees());;
 			currentEmployee = null;
-			employeeData = FXCollections.observableArrayList(Employee.getEmployees());
-			empTableView.setItems(employeeData);
 			clearEmpForm();
-
 		}
 	}
 	
 	@FXML
 	private void empSaveClick(ActionEvent event)
 	{
-		Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you wish to save your changes?");
-		alert.setHeaderText("Confirmation");
-		alert.setTitle("Save Agent");
-		alert.initStyle(StageStyle.UTILITY);
-		DialogPane dialogPane = alert.getDialogPane();
-
-		dialogPane.getStylesheets().add(myTabPane.getParent().getStylesheets().get(0));
-		dialogPane.getStyleClass().add("myDialog");
-		Optional<ButtonType> result = alert.showAndWait();
-
+		Optional<ButtonType> result = displayAlert("Are you sure you wish to save your changes?","Confirmation","Save Employee");
 		if (result.isPresent() && result.get() == ButtonType.OK)
 		{
-
-			Employee updatedEmployee = new Employee();
-			updatedEmployee.setEmpId(currentEmployee.getEmpId());
-			updatedEmployee.setEmpFirstName(empFirstField.getText());
-			updatedEmployee.setEmpLastName(empLastField.getText());
-			updatedEmployee.setEmpMiddleInitial(empMiddleInitialField.getText());
-			updatedEmployee.setEmpBusPhone(empPhoneField.getText());
-			updatedEmployee.setEmpEmail(empEmailField.getText());
-			updatedEmployee.setEmpPosition(empPositionCombo.getSelectionModel().getSelectedItem().toString());
-			updatedEmployee.setEmpAvgHours(BigDecimal.valueOf(Double.parseDouble(empHoursField.getText())));
-			updatedEmployee.setEmpSalary(Double.valueOf(empSalaryField.getText(1, empSalaryField.getLength())));
-			updatedEmployee.setEmpWorkStatus(empStatusCombo.getSelectionModel().getSelectedItem().toString());
-			updatedEmployee.setAgent(isAgentCheck.isSelected());
+			Employee updatedEmployee = createUpdatedEmployee();
 			Agent oldAgent = Agent.getAgentById(currentEmployee.getEmpId());
 			Agent newAgent = new Agent();
+			
 			if (oldAgent != null || updatedEmployee.IsAgent())
 			{
-
-				newAgent.setAgtFirstName(empFirstField.getText());
-				newAgent.setAgtLastName(empLastField.getText());
-				newAgent.setAgtMiddleInitial(empMiddleInitialField.getText());
-				newAgent.setAgtBusPhone(empPhoneField.getText());
-				newAgent.setAgtEmail(empEmailField.getText());
-				newAgent.setAgtPosition(empPositionCombo.getSelectionModel().getSelectedItem().toString());
+				newAgent = createNewAgent();
 				if (oldAgent == null)
 				{
-					newAgent.setAgencyId(1);
-					newAgent.setAgentId(currentEmployee.getEmpId());
-					newAgent.setActive(true);
 					Agent.insertAgent(newAgent);
 
 				}
@@ -547,65 +482,81 @@ public class AgentsController
 				{
 					newAgent.setAgencyId(oldAgent.getAgencyId());
 					newAgent.setAgentId(currentEmployee.getEmpId());
-
 					if (updatedEmployee.IsAgent() == false)
 					{
 						newAgent.setActive(false);
-						if (oldAgent.isActive())
+						ArrayList<Pair<Integer, Integer>> custstobackup = transferCusts(newAgent);
+						if (custstobackup.get(0).getKey() != -1)
 						{
-							transferCusts(oldAgent.getAgentId());
-							ArrayList<Pair<Integer, Integer>> custstobackup = transferCusts(newAgent.getAgentId());
-							if (custstobackup != null)
+							for (Pair<Integer, Integer> myPair : custstobackup)
 							{
-								for (Pair<Integer, Integer> myPair : custstobackup)
-								{
-									Agent.custBackup(myPair);
-								}
+								Agent.custBackup(myPair);
 							}
-
 						}
+						else
+						{
+							return;
+						}
+
 					}
-					Agent.updateAgent(newAgent, oldAgent);
+					
 				}
-				if (currentAgent.getAgentId() == oldAgent.getAgentId())
+				if (currentAgent != null)
 				{
-					currentAgent = newAgent;
-					this.populateAgentTab(newAgent);
+					if (currentAgent.getAgentId() == oldAgent.getAgentId())
+					{
+						currentAgent = newAgent;
+						this.populateAgentTab(newAgent);
+					}
 				}
 
 			}
 			int temp = 0;
 			temp = empTableView.getSelectionModel().getSelectedIndex();
+			Agent.updateAgent(newAgent, oldAgent);
 			Employee.updateEmployee(updatedEmployee, currentEmployee);
 			employeeData = FXCollections.observableArrayList(Employee.getEmployees());
-			empTableView.setItems(employeeData);
 			empTableView.getSelectionModel().clearAndSelect(temp);
-			
 		}
 
 	}
 		
-	
+	@FXML
+	private void agencySaveClick(ActionEvent event)
+	{
+		Agency.updateAgency(createUpdatedAgency(), currentAgency);
+		int temp = agencyListView.getSelectionModel().getSelectedIndex();
+		agencyData = FXCollections.observableArrayList(Agency.getAgencies());
+		agencyListView.setItems(agencyData);
+		agencyListView.getSelectionModel().clearAndSelect(temp);
+
+	}
 	
 	private void AgencyChanged(Agency newAgency)
 	{
-		currentAgency = newAgency;
-		if(agencyAgentData !=null){agencyAgentData.clear();}
-		agencyAgentData = FXCollections.observableArrayList((Agent.getAgentsByAgency(newAgency.getAgencyId())));
-		agentTableView.setItems(agencyAgentData);
-		agencyAddressField.setText(newAgency.getAgncyAddress());
-		agencyCityField.setText(newAgency.getAgncyCity());
-		agencyCountryField.setText(newAgency.getAgncyCountry());
-		agencyPostalField.setText(newAgency.getAgncyPostal());
-		agencyPhoneField.setText(newAgency.getAgncyPhone());
-		agencyFaxField.setText(newAgency.getAgncyFax());
-		if (newAgency.getAgncyProv() != null)
+		if (newAgency != null)
 		{
-		agencyProvComboBox.getSelectionModel().select(Province.valueOf(newAgency.getAgncyProv()));
-		}
-		else
-		{
-			agencyProvComboBox.getSelectionModel().select(-1);
+			currentAgency = newAgency;
+			if (agencyAgentData != null)
+			{
+				agencyAgentData.clear();
+			}
+			agencyAgentData = FXCollections.observableArrayList((Agent.getAgentsByAgency(newAgency.getAgencyId())));
+			agentTableView.setItems(agencyAgentData);
+			agencyAddressField.setText(newAgency.getAgncyAddress());
+			agencyCityField.setText(newAgency.getAgncyCity());
+			agencyCountryField.setText(newAgency.getAgncyCountry());
+			agencyPostalField.setText(newAgency.getAgncyPostal());
+			agencyPhoneField.setText(newAgency.getAgncyPhone());
+			agencyFaxField.setText(newAgency.getAgncyFax());
+			if (newAgency.getAgncyProv() != null)
+			{
+				agencyProvComboBox.getSelectionModel().select(Province.valueOf(newAgency.getAgncyProv()));
+			}
+			else
+			{
+				agencyProvComboBox.getSelectionModel().select(null);
+			}
 		}
 	}
 		
@@ -630,7 +581,7 @@ public class AgentsController
 		}
 		else
 		{
-		empPositionCombo.getSelectionModel().select(-1);
+		empPositionCombo.getSelectionModel().select(null);
 		}
 		empStatusCombo.getSelectionModel().select(WorkStatus.valueOf(newEmployee.getEmpWorkStatus()));
 		}
@@ -654,12 +605,12 @@ public class AgentsController
 	
 
 	
-	private ArrayList<Pair<Integer,Integer>> transferCusts(int agentId)
+	private ArrayList<Pair<Integer,Integer>> transferCusts(Agent myAgent)
 	{
 		ArrayList<Pair<Integer, Integer>> agentPairs = new ArrayList<Pair<Integer,Integer>>();
 		ArrayList<Pair<Customer, Customer>> customersChanged = new ArrayList<Pair<Customer, Customer>>();
-		ComboPair thisPair = new ComboPair(currentAgent.getAgentId(), currentAgent.getAgtFirstName());
-		for (Customer customer : Customer.getAllAgentCustomers(agentId))
+		ComboPair thisPair = new ComboPair(myAgent.getAgentId(), myAgent.getAgtFirstName());
+		for (Customer customer : Customer.getAllAgentCustomers(myAgent.getAgentId()))
 		{
 			boolean okClicked = mainApp.showTransferCustomerDialog(thisPair, customer,this);
 			if (okClicked)
@@ -670,19 +621,18 @@ public class AgentsController
 				System.out.println(transferAgent);
 				newCustomer.setAgentId((int) transferAgent.getKey());
 				customersChanged.add(new Pair<Customer, Customer>(newCustomer, customer));
-				System.out.println("New customer:" + newCustomer + "Old Customer:" + customer);
 			}
 			else
 			{
-				return null;
+				agentPairs.add(new Pair<Integer,Integer>(-1,-1));
+				return agentPairs;
 			}
 		}
 		for (Pair<Customer, Customer> customer : customersChanged)
 		{	
-			agentPairs.add(new Pair<Integer,Integer>(agentId,customer.getValue().getCustomerId()));
+			agentPairs.add(new Pair<Integer,Integer>(myAgent.getAgentId(),customer.getValue().getCustomerId()));
 			Customer.updateCustomer(customer.getKey(), customer.getValue());
 		}
-		System.out.println(agentPairs);
 		return agentPairs;
 	}
 	
@@ -700,4 +650,75 @@ public class AgentsController
 	    isAgentCheck.setSelected(false);
 	    empTableView.getSelectionModel().clearSelection();
 	}
+	private Agency createUpdatedAgency()
+	{
+		Agency myAgency=new Agency();
+		myAgency.setAgencyId(currentAgency.getAgencyId());
+		myAgency.setAgncyAddress(agencyAddressField.getText());
+		myAgency.setAgncyCity(agencyCityField.getText());
+		myAgency.setAgncyCountry(agencyCountryField.getText());
+		myAgency.setAgncyFax(agencyFaxField.getText());
+		myAgency.setAgncyPhone(agencyPhoneField.getText());
+		myAgency.setAgncyPostal(agencyPostalField.getText());
+		myAgency.setAgncyProv(agencyProvComboBox.getSelectionModel().getSelectedItem().toString());
+		return myAgency;
+	}
+	
+	private Agent createUpdatedAgent()
+	{
+		Agent updatedAgent = new Agent();
+		updatedAgent.setAgtFirstName(agtFirstNameField.getText());
+		updatedAgent.setAgtLastName(agtLastNameField.getText());
+		updatedAgent.setAgtMiddleInitial(agtMiddleInitialField.getText());
+		updatedAgent.setAgtBusPhone(agtBusPhoneField.getText());
+		updatedAgent.setAgtEmail(agtEmailField.getText());
+		updatedAgent.setAgtPosition(agtPositionField.getText());
+		updatedAgent.setAgencyId(agencyCombo.getSelectionModel().getSelectedItem().getAgencyId());
+		updatedAgent.setAgentId(currentAgent.getAgentId());
+		updatedAgent.setActive(activeCheck.isSelected());
+		return updatedAgent;
+	}
+	private Employee createUpdatedEmployee()
+	{
+		Employee updatedEmployee = new Employee();
+		updatedEmployee.setEmpId(currentEmployee.getEmpId());
+		updatedEmployee.setEmpFirstName(empFirstField.getText());
+		updatedEmployee.setEmpLastName(empLastField.getText());
+		updatedEmployee.setEmpMiddleInitial(empMiddleInitialField.getText());
+		updatedEmployee.setEmpBusPhone(empPhoneField.getText());
+		updatedEmployee.setEmpEmail(empEmailField.getText());
+		updatedEmployee.setEmpPosition(empPositionCombo.getSelectionModel().getSelectedItem().toString());
+		updatedEmployee.setEmpAvgHours(BigDecimal.valueOf(Double.parseDouble(empHoursField.getText())));
+		updatedEmployee.setEmpSalary(Double.valueOf(empSalaryField.getText(1, empSalaryField.getLength())));
+		updatedEmployee.setEmpWorkStatus(empStatusCombo.getSelectionModel().getSelectedItem().toString());
+		updatedEmployee.setAgent(isAgentCheck.isSelected());
+		return updatedEmployee;
+	}
+	private Agent createNewAgent()
+	{
+		Agent newAgent = new Agent();
+		newAgent.setAgtFirstName(empFirstField.getText());
+		newAgent.setAgtLastName(empLastField.getText());
+		newAgent.setAgtMiddleInitial(empMiddleInitialField.getText());
+		newAgent.setAgtBusPhone(empPhoneField.getText());
+		newAgent.setAgtEmail(empEmailField.getText());
+		newAgent.setAgtPosition(empPositionCombo.getSelectionModel().getSelectedItem().toString());
+		newAgent.setAgencyId(1);
+		newAgent.setAgentId(currentEmployee.getEmpId());
+		newAgent.setActive(true);
+		return newAgent;
+	}
+	private Optional<ButtonType> displayAlert(String message,String header, String title)
+	{
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION, message);
+		alert.setHeaderText(header);
+		alert.setTitle(title);
+		alert.initStyle(StageStyle.UTILITY);
+		DialogPane dialogPane = alert.getDialogPane();
+
+		dialogPane.getStylesheets().add(myTabPane.getParent().getStylesheets().get(0));
+		dialogPane.getStyleClass().add("myDialog");
+		return alert.showAndWait();
+	}
+	
 }

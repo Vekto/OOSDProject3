@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxWidth="560.0" prefHeight="400.0" prefWidth="550.0" stylesheets="@DarkTheme.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.65" fx:controller="travelexperts.controller.ReturnCustsDialogController">
+   <children>
+      <Button focusTraversable="false" layoutX="217.0" layoutY="359.0" mnemonicParsing="false" onAction="#handleOk" prefHeight="27.0" prefWidth="116.0" text="Save" AnchorPane.bottomAnchor="14.0" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="131.0" layoutY="14.0" text="Customers to return to agent" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="12.0" />
+      <ListView fx:id="oldCustList" layoutY="86.0" prefHeight="251.0" prefWidth="196.0" AnchorPane.bottomAnchor="63.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="86.0" />
+      <ListView fx:id="returnCustList" layoutX="295.0" layoutY="86.0" prefHeight="251.0" prefWidth="196.0" AnchorPane.bottomAnchor="63.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="86.0" />
+      <Button focusTraversable="false" layoutX="223.0" layoutY="187.0" mnemonicParsing="false" onAction="#removeClick" text="&lt;--Remove" AnchorPane.leftAnchor="223.0" />
+      <Button alignment="CENTER" focusTraversable="false" layoutX="223.0" layoutY="126.0" mnemonicParsing="false" onAction="#addClick" prefHeight="27.0" prefWidth="84.0" text="Add--&gt;" AnchorPane.leftAnchor="223.0" />
+      <Label fx:id="AgentLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="300.0" layoutY="53.0" prefHeight="26.0" prefWidth="182.0" text="Label" />
+   </children>
+   <effect>
+      <InnerShadow choke="0.72" color="#61a2b1" height="50.0" radius="24.5" width="50.0" />
+   </effect>
+</AnchorPane>

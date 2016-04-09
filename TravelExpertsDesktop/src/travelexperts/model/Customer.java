@@ -188,18 +188,7 @@ public class Customer
 	@Override
 	public String toString()
 	{
-		String returnString = "CustomerId: " + this.CustomerId 
-				+ ", First Name: " + this.CustFirstName
-				+ ", Last Name: " + this.CustLastName
-				+ ", Address: " + this.CustAddress 
-				+ ", City: " + this.CustCity
-				+ ", Province: "+ this.CustProv
-				+ ", Country: " + this.CustCountry 
-				+ ", Postal: " + this.CustPostal 
-				+ ", Email: " + this.CustEmail
-				+ ", Buisness Phone: " + this.CustBusPhone
-				+ ", Home Phone: " + this.CustHomePhone
-				+ ", AgentId: " + this.AgentId;
+		String returnString = this.CustomerId + ", " + this.CustFirstName +" "+ this.CustLastName;
 		return returnString;
 	}
 	

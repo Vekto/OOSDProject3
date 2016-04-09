@@ -92,7 +92,7 @@
                            </effect>
                         </TextField>
                         <Label layoutX="6.0" layoutY="63.0" text="Middle Initial:" />
-                        <Button fx:id="TransferCustomerButton" focusTraversable="false" layoutX="443.0" layoutY="243.0" mnemonicParsing="false" onAction="#onTransferCustomerClick" prefHeight="27.0" prefWidth="143.0" text="Transfer Customer" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="243.0">
+                        <Button fx:id="TransferCustomerButton" focusTraversable="false" layoutX="443.0" layoutY="235.0" mnemonicParsing="false" onAction="#onTransferCustomerClick" prefHeight="27.0" prefWidth="143.0" text="Transfer Customer" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="230.0">
                            <tooltip>
                               <Tooltip text="Move customer to a new agent" />
                            </tooltip></Button>
@@ -104,7 +104,7 @@
                         <Label layoutX="6.0" layoutY="172.0" text="Agency" />
                         <CheckBox fx:id="activeCheck" layoutX="407.0" layoutY="172.0" mnemonicParsing="false" styleClass="text-field" />
                         <Label layoutX="339.0" layoutY="172.0" text="Active" />
-                        <TableView fx:id="customersTable" centerShape="false" layoutX="126.0" layoutY="334.0" prefHeight="187.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="274.0">
+                        <TableView fx:id="customersTable" centerShape="false" layoutX="126.0" layoutY="334.0" prefHeight="187.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="261.0">
                           <columns>
                               <TableColumn fx:id="custIdCol" prefWidth="75.0" text="Id" />
                             <TableColumn fx:id="custFirstNameCol" prefWidth="75.0" text="FirstName" />
@@ -118,7 +118,7 @@
                         </TableView>
                         <TextField fx:id="agtPositionField" disable="true" layoutX="405.0" layoutY="111.0" prefHeight="37.0" prefWidth="172.0" AnchorPane.topAnchor="111.0" />
                         <Button layoutX="21.0" layoutY="216.0" mnemonicParsing="false" onAction="#agtSaveClick" prefHeight="27.0" prefWidth="80.0" text="Save" />
-                        <Label layoutX="228.0" layoutY="244.0" text="Agent's Customers" />
+                        <Label layoutX="226.0" layoutY="232.0" text="Agent's Customers" />
                      </children>
                   </AnchorPane>
                </content>
@@ -169,7 +169,7 @@
                         <Label layoutX="258.0" layoutY="230.0" text="Employees" />
                         <TextField fx:id="empMiddleInitialField" layoutX="538.0" layoutY="14.0" prefHeight="37.0" prefWidth="46.0" />
                         <Label layoutX="502.0" layoutY="15.0" text="M.I." />
-                        <Button focusTraversable="false" layoutX="18.0" layoutY="228.0" mnemonicParsing="false" onAction="#empSaveClick" text="Save" />
+                        <Button focusTraversable="false" layoutX="21.0" layoutY="216.0" mnemonicParsing="false" onAction="#empSaveClick" prefHeight="27.0" prefWidth="80.0" text="Save" />
                         <RadioButton id="ContactRad" layoutX="354.0" layoutY="234.0" mnemonicParsing="false" onAction="#sortSelect" scaleX="0.9" scaleY="0.9">
                            <toggleGroup>
                               <ToggleGroup fx:id="EmpView" />
@@ -216,6 +216,7 @@
                         </TableView>
                         <Label layoutX="56.0" layoutY="24.0" text="Agencies" AnchorPane.leftAnchor="56.0" />
                         <Label layoutX="271.0" layoutY="289.0" text="Agents" />
+                        <Button layoutX="38.0" layoutY="280.0" mnemonicParsing="false" onAction="#agencySaveClick" prefHeight="27.0" prefWidth="80.0" text="Save" />
                      </children>
                   </AnchorPane>
             </content>

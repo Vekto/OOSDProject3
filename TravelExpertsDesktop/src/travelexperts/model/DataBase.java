@@ -210,9 +210,7 @@ public class DataBase
 			{
 				Field field = myNewEntity.getClass().getDeclaredField(column);
 				field.setAccessible(true);
-				System.out.println();
 				statement.setObject(i, field.get(myNewEntity));
-				System.out.println(statement.toString());
 				i++;
 			}
 			updateCount = statement.executeUpdate();

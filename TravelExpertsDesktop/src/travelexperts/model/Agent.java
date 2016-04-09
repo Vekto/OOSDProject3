@@ -260,7 +260,7 @@ public class Agent
 	        ResultSet rs = stmt.executeQuery(query);
 	        while (rs.next()) 
 	        {
-	            int custId = rs.getInt("'CustId");  
+	            int custId = rs.getInt("CustId");  
 	            myCusts.add(custId);
 	        }
 	    }
@@ -269,6 +269,22 @@ public class Agent
 				e.printStackTrace();
 		}
 	    return myCusts;
+	}
+	public static void clearOldCusts(int AgentId)
+	{
+		Connection conn = DataBase.getConnection();
+	
+	    Statement stmt = null;
+	    String sql = "Delete from custagentbackup where agentId = " + AgentId;
+	    try {
+	        stmt = conn.createStatement();
+	        stmt.execute(sql);
+
+	    }
+	    catch (SQLException e) 
+	    {
+				e.printStackTrace();
+		}
 	}
 	
 	//Overrides
